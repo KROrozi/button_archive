@@ -15,7 +15,7 @@
     }
 
     :root {
-      --bg: #ffffff; /* 페이지 배경 흰색으로 변경 */
+      --bg: #ffffff;
       --surface: #ffffff;
       --border: rgba(0, 0, 0, 0.12);
       --border-hover: rgba(0, 0, 0, 0.25);
@@ -24,7 +24,7 @@
       --text-hint: #aaaaaa;
       --radius-md: 8px;
       --radius-lg: 12px;
-      --gap: 20px; /* 이미지 사이의 간격을 20px로 확대 */
+      --gap: 20px;
     }
 
     body {
@@ -66,7 +66,6 @@
       margin: 0 auto;
     }
 
-    /* 반응형: 화면 좁을 때 열 수 줄이기 */
     @media (max-width: 600px) {
       .grid { grid-template-columns: repeat(3, 1fr); }
     }
@@ -76,12 +75,12 @@
     }
 
     /* ══════════════════════════════════════════
-       개별 버튼 셀 (외곽 박스 제거 및 풀사이즈화)
+       개별 버튼 셀
        ══════════════════════════════════════════ */
     .btn-cell {
       aspect-ratio: 1;
-      background: transparent; /* 외곽 박스 배경 제거 */
-      border: none; /* 외곽 박스 테두리 제거 */
+      background: transparent;
+      border: none;
       border-radius: var(--radius-md);
       display: flex;
       flex-direction: column;
@@ -94,7 +93,6 @@
       user-select: none;
     }
 
-    /* 호버 시 이미지 슬쩍 커지는 효과 추가 */
     .btn-cell:hover .btn-img {
       transform: scale(1.04);
     }
@@ -103,9 +101,6 @@
       transform: scale(0.96);
     }
 
-    /* ══════════════════════════════════════════
-       버튼 내 이미지 영역 (박스 크기만큼 꽉 차게 변경)
-       ══════════════════════════════════════════ */
     .btn-img {
       width: 100%;
       height: 100%;
@@ -120,7 +115,6 @@
       z-index: 1;
     }
 
-    /* 플레이스홀더도 박스 크기에 맞춤 */
     .img-placeholder {
       width: 100%;
       height: 100%;
@@ -134,7 +128,6 @@
       letter-spacing: 0.05em;
     }
 
-    /* 버튼 라벨 (이미지 위에 얹어지도록 스타일 수정) */
     .btn-label {
       position: absolute;
       bottom: 8px;
@@ -143,14 +136,14 @@
       font-family: monospace;
       color: var(--text-secondary);
       letter-spacing: 0.04em;
-      background: rgba(255, 255, 255, 0.75); /* 이미지 위에서도 글자가 보이도록 반투명 배경 추가 */
+      background: rgba(255, 255, 255, 0.75);
       padding: 2px 6px;
       border-radius: 4px;
       pointer-events: none;
     }
 
     /* ══════════════════════════════════════════
-       인터랙션 오버레이 컨테이너
+       인터랙션 오버레이
        ══════════════════════════════════════════ */
     #overlay {
       position: fixed;
@@ -165,44 +158,44 @@
 
   <header class="header">
     <h1>button archive</h1>
-    <p>버튼을 클릭하면 인터랙션이 실행됩니다</p>
+    <p>버튼을 클릭하면 인터랙션과 개별 지정된 사운드가 재생됩니다</p>
   </header>
 
   <div class="grid" id="grid"></div>
-
   <div id="overlay"></div>
 
 
   <script>
   /* ════════════════════════════════════════════════
-     버튼 데이터 (경로 절대 유지)
+     버튼 데이터 (★ 여기서 사운드 경로를 마음대로 수정하세요!)
      ════════════════════════════════════════════════ */
   const BUTTONS = [
-    { id: 1,  name: 'BTN-01', img: './images/bt1.png' },
-    { id: 2,  name: 'BTN-02', img: './images/bt2.png' },
-    { id: 3,  name: 'BTN-03', img: './images/bt3.png' },
-    { id: 4,  name: 'BTN-04', img: './images/bt4.png' },
-    { id: 5,  name: 'BTN-05', img: './images/bt5.png' },
-    { id: 6,  name: 'BTN-06', img: './images/bt6.png' },
-    { id: 7,  name: 'BTN-07', img: './images/bt7.png' },
-    { id: 8,  name: 'BTN-08', img: './images/bt8.png' },
-    { id: 9,  name: 'BTN-09', img: './images/bt9.png' },
-    { id: 10, name: 'BTN-10', img: './images/bt10.png' },
-    { id: 11, name: 'BTN-11', img: './images/bt11.png' },
-    { id: 12, name: 'BTN-12', img: './images/bt12.png' },
-    { id: 13, name: 'BTN-13', img: './images/bt13.png' },
-    { id: 14, name: 'BTN-14', img: './images/bt14.png' },
-    { id: 15, name: 'BTN-15', img: './images/bt15.png' },
-    { id: 16, name: 'BTN-16', img: './images/bt16.png' },
-    { id: 17, name: 'BTN-17', img: './images/bt17.png' },
-    { id: 18, name: 'BTN-18', img: './images/bt18.png' },
-    { id: 19, name: 'BTN-19', img: './images/bt19.png' },
-    { id: 20, name: 'BTN-20', img: './images/bt20.png' },
-    { id: 21, name: 'BTN-21' },
-    { id: 22, name: 'BTN-22' },
-    { id: 23, name: 'BTN-23' },
-    { id: 24, name: 'BTN-24' },
-    { id: 25, name: 'BTN-25' },
+    { id: 1,  name: 'BTN-01', img: './images/bt1.png',  sound: './sounds/bts1.mp3' },
+    { id: 2,  name: 'BTN-02', img: './images/bt2.png',  sound: './sounds/bts2.mp3' },
+    { id: 3,  name: 'BTN-03', img: './images/bt3.png',  sound: './sounds/bts3.mp3' },
+    { id: 4,  name: 'BTN-04', img: './images/bt4.png',  sound: './sounds/bts4.mp3' },
+    { id: 5,  name: 'BTN-05', img: './images/bt5.png',  sound: './sounds/bts5.mp3' },
+    { id: 6,  name: 'BTN-06', img: './images/bt6.png',  sound: './sounds/bts6.mp3' },
+    { id: 7,  name: 'BTN-07', img: './images/bt7.png',  sound: './sounds/bts7.mp3' },
+    { id: 8,  name: 'BTN-08', img: './images/bt8.png',  sound: './sounds/bts8.mp3' },
+    { id: 9,  name: 'BTN-09', img: './images/bt9.png',  sound: './sounds/bts9.mp3' },
+    { id: 10, name: 'BTN-10', img: './images/bt10.png', sound: './sounds/bts10.mp3' },
+    { id: 11, name: 'BTN-11', img: './images/bt11.png', sound: './sounds/bts11.mp3' },
+    { id: 12, name: 'BTN-12', img: './images/bt12.png', sound: './sounds/bts12.mp3' },
+    { id: 13, name: 'BTN-13', img: './images/bt13.png', sound: './sounds/bts13.mp3' },
+    { id: 14, name: 'BTN-14', img: './images/bt14.png', sound: './sounds/bts14.mp3' },
+    { id: 15, name: 'BTN-15', img: './images/bt15.png', sound: './sounds/bts15.mp3' },
+    { id: 16, name: 'BTN-16', img: './images/bt16.png', sound: './sounds/bts16.mp3' },
+    { id: 17, name: 'BTN-17', img: './images/bt17.png', sound: './sounds/bts17.mp3' },
+    { id: 18, name: 'BTN-18', img: './images/bt18.png', sound: './sounds/bts18.mp3' },
+    { id: 19, name: 'BTN-19', img: './images/bt19.png', sound: './sounds/bts19.mp3' },
+    { id: 20, name: 'BTN-20', img: './images/bt20.png', sound: './sounds/bts20.mp3' },
+    // 21~25번도 자유롭게 사운드 파일명을 매칭시킬 수 있습니다 (예: click.mp3, alert.wav 등)
+    { id: 21, name: 'BTN-21', sound: './sounds/bts21.mp3' },
+    { id: 22, name: 'BTN-22', sound: './sounds/bts22.mp3' },
+    { id: 23, name: 'BTN-23', sound: './sounds/bts23.mp3' },
+    { id: 24, name: 'BTN-24', sound: './sounds/bts24.mp3' },
+    { id: 25, name: 'BTN-25', sound: './sounds/bts25.mp3' },
   ];
 
 
@@ -239,7 +232,7 @@
 
 
   /* ════════════════════════════════════════════════
-     그리드 렌더링 (object-fit: cover로 채움 처리)
+     그리드 렌더링 및 동적 사운드 연동
      ════════════════════════════════════════════════ */
   const grid    = document.getElementById('grid');
   const overlay = document.getElementById('overlay');
@@ -248,7 +241,6 @@
     const cell = document.createElement('div');
     cell.className = 'btn-cell';
 
-    // 이미지가 박스 안에 여백 없이 꽉 차도록 object-fit: cover 적용
     const imgHTML = btn.img
       ? `<img src="${btn.img}" alt="${btn.name}" style="width:100%;height:100%;object-fit:cover;">`
       : `<div class="img-placeholder">IMG</div>`;
@@ -258,7 +250,17 @@
       <span class="btn-label">${btn.name}</span>
     `;
 
+    // 클릭 시 사운드 처리
     cell.addEventListener('click', () => {
+      // 해당 버튼에 sound 경로가 지정되어 있다면 재생합니다.
+      if (btn.sound) {
+        const audio = new Audio(btn.sound);
+        audio.play().catch(err => {
+          console.warn(`사운드 로드 실패: ${btn.sound}\n폴더 구조와 파일명을 확인해주세요.`, err);
+        });
+      }
+
+      // 기존 시각 인터랙션 실행
       if (INTERACTIONS[btn.id]) INTERACTIONS[btn.id]();
     });
 
@@ -267,261 +269,99 @@
 
 
   /* ════════════════════════════════════════════════
-     유틸리티 함수
+     인터랙션 유틸리티 및 함수들
      ════════════════════════════════════════════════ */
   const vw   = () => window.innerWidth;
   const vh   = () => window.innerHeight;
   const rand = (a, b) => Math.random() * (b - a) + a;
 
-
-  /* ════════════════════════════════════════════════
-     인터랙션 함수 25개
-     ════════════════════════════════════════════════ */
-
   function spawnCircles(count, color, mode) {
     for (let i = 0; i < count; i++) {
       const el = document.createElement('div');
       const size = rand(10, 30);
-      el.style.cssText = `
-        position: fixed;
-        width: ${size}px;
-        height: ${size}px;
-        border-radius: 50%;
-        background: ${color};
-        opacity: 0.85;
-        pointer-events: none;
-        left: ${rand(0, 100)}vw;
-        top: -${size}px;
-      `;
+      el.style.cssText = `position:fixed;width:${size}px;height:${size}px;border-radius:50%;background:${color};opacity:0.85;pointer-events:none;left:${rand(0,100)}vw;top:-${size}px;`;
       overlay.appendChild(el);
-
       const tx = mode === 'explode' ? rand(-200, 200) : rand(-40, 40);
       const ty = mode === 'explode' ? rand(-200, 200) : vh() + size + 20;
-
-      el.animate([
-        { transform: 'translate(0,0)', opacity: 0.85 },
-        { transform: `translate(${tx}px, ${ty}px)`, opacity: 0 }
-      ], {
-        duration: rand(600, 1400),
-        delay: rand(0, 400),
-        easing: 'cubic-bezier(.2,.8,.4,1)',
-        fill: 'forwards'
-      }).onfinish = () => el.remove();
+      el.animate([{ transform: 'translate(0,0)', opacity: 0.85 }, { transform: `translate(${tx}px, ${ty}px)`, opacity: 0 }], 
+      { duration: rand(600, 1400), delay: rand(0, 400), easing: 'cubic-bezier(.2,.8,.4,1)', fill: 'forwards' }).onfinish = () => el.remove();
     }
   }
 
   function flyText(txt, color, size) {
     const el = document.createElement('div');
     el.textContent = txt;
-    el.style.cssText = `
-      position: fixed;
-      font-size: ${size || 18}px;
-      font-weight: 500;
-      color: ${color};
-      pointer-events: none;
-      left: ${rand(15, 75)}vw;
-      top: ${rand(20, 65)}vh;
-      white-space: nowrap;
-      z-index: 10000;
-    `;
+    el.style.cssText = `position:fixed;font-size:${size||18}px;font-weight:500;color:${color};pointer-events:none;left:${rand(15,75)}vw;top:${rand(20,65)}vh;white-space:nowrap;z-index:10000;`;
     overlay.appendChild(el);
-
-    el.animate([
-      { transform: 'translateY(0) scale(1)', opacity: 1 },
-      { transform: 'translateY(-80px) scale(1.4)', opacity: 0 }
-    ], { duration: 900, easing: 'ease-out', fill: 'forwards' })
-    .onfinish = () => el.remove();
+    el.animate([{ transform: 'translateY(0) scale(1)', opacity: 1 }, { transform: 'translateY(-80px) scale(1.4)', opacity: 0 }], { duration: 900, easing: 'ease-out', fill: 'forwards' }).onfinish = () => el.remove();
   }
 
   function spawnStars(count, color) {
     for (let i = 0; i < count; i++) {
-      const el = document.createElement('div');
-      el.textContent = '★';
-      el.style.cssText = `
-        position: fixed;
-        font-size: ${rand(14, 32)}px;
-        color: ${color};
-        left: ${rand(0, 100)}vw;
-        top: ${rand(0, 100)}vh;
-        pointer-events: none;
-        opacity: 0.9;
-      `;
+      const el = document.createElement('div'); el.textContent = '★';
+      el.style.cssText = `position:fixed;font-size:${rand(14,32)}px;color:${color};left:${rand(0,100)}vw;top:${rand(0,100)}vh;pointer-events:none;opacity:0.9;`;
       overlay.appendChild(el);
-
-      el.animate([
-        { transform: `rotate(0deg) scale(0)`, opacity: 0.9 },
-        { transform: `rotate(${rand(-360, 360)}deg) scale(1)`, opacity: 0, offset: 0.7 },
-        { opacity: 0 }
-      ], { duration: rand(800, 1600), delay: rand(0, 600), fill: 'forwards' })
-      .onfinish = () => el.remove();
+      el.animate([{ transform: `rotate(0deg) scale(0)`, opacity: 0.9 }, { transform: `rotate(${rand(-360,360)}deg) scale(1)`, opacity: 0, offset: 0.7 }, { opacity: 0 }], { duration: rand(800, 1600), delay: rand(0, 600), fill: 'forwards' }).onfinish = () => el.remove();
     }
   }
 
   function scanLine(dir, color) {
-    const el = document.createElement('div');
-    const isH = dir === 'horizontal';
-    el.style.cssText = `
-      position: fixed;
-      background: ${color};
-      opacity: 0.6;
-      pointer-events: none;
-      ${isH
-        ? `width: 100vw; height: 3px; top: 0; left: 0;`
-        : `height: 100vh; width: 3px; top: 0; left: 0;`
-      }
-    `;
+    const el = document.createElement('div'); const isH = dir === 'horizontal';
+    el.style.cssText = `position:fixed;background:${color};opacity:0.6;pointer-events:none;${isH?`width:100vw;height:3px;top:0;left:0;`:`height:100vh;width:3px;top:0;left:0;`}`;
     overlay.appendChild(el);
-
-    el.animate([
-      { transform: isH ? 'translateY(-3px)' : 'translateX(-3px)' },
-      { transform: isH ? `translateY(${vh()}px)` : `translateX(${vw()}px)` }
-    ], { duration: 600, easing: 'linear', fill: 'forwards' })
-    .onfinish = () => el.remove();
+    el.animate([{ transform: isH ? 'translateY(-3px)' : 'translateX(-3px)' }, { transform: isH ? `translateY(${vh()}px)` : `translateX(${vw()}px)` }], { duration: 600, easing: 'linear', fill: 'forwards' }).onfinish = () => el.remove();
   }
 
   function letterRain(chars, color) {
     for (let i = 0; i < 18; i++) {
-      const el = document.createElement('div');
-      el.textContent = chars[Math.floor(rand(0, chars.length))];
-      el.style.cssText = `
-        position: fixed;
-        font-family: monospace;
-        font-size: ${rand(12, 28)}px;
-        color: ${color};
-        left: ${rand(0, 100)}vw;
-        top: -30px;
-        pointer-events: none;
-      `;
+      const el = document.createElement('div'); el.textContent = chars[Math.floor(rand(0, chars.length))];
+      el.style.cssText = `position:fixed;font-family:monospace;font-size:${rand(12,28)}px;color:${color};left:${rand(0,100)}vw;top:-30px;pointer-events:none;`;
       overlay.appendChild(el);
-
-      el.animate([
-        { transform: 'translateY(0)', opacity: 0.9 },
-        { transform: `translateY(${vh() + 40}px)`, opacity: 0.1 }
-      ], { duration: rand(700, 1400), delay: rand(0, 500), easing: 'linear', fill: 'forwards' })
-      .onfinish = () => el.remove();
+      el.animate([{ transform: 'translateY(0)', opacity: 0.9 }, { transform: `translateY(${vh()+40}px)`, opacity: 0.1 }], { duration: rand(700, 1400), delay: rand(0, 500), easing: 'linear', fill: 'forwards' }).onfinish = () => el.remove();
     }
   }
 
   function ripple(color) {
     const el = document.createElement('div');
-    el.style.cssText = `
-      position: fixed;
-      border: 3px solid ${color};
-      border-radius: 50%;
-      width: 0;
-      height: 0;
-      top: 50%;
-      left: 50%;
-      pointer-events: none;
-      opacity: 0.9;
-    `;
+    el.style.cssText = `position:fixed;border:3px solid ${color};border-radius:50%;width:0;height:0;top:50%;left:50%;pointer-events:none;opacity:0.9;`;
     overlay.appendChild(el);
-
-    el.animate([
-      { width: '0px', height: '0px', marginLeft: '0px', marginTop: '0px', opacity: 0.9 },
-      { width: '200vmax', height: '200vmax', marginLeft: '-100vmax', marginTop: '-100vmax', opacity: 0 }
-    ], { duration: 900, easing: 'ease-out', fill: 'forwards' })
-    .onfinish = () => el.remove();
+    el.animate([{ width: '0px', height: '0px', marginLeft: '0px', marginTop: '0px', opacity: 0.9 }, { width: '200vmax', height: '200vmax', marginLeft: '-100vmax', marginTop: '-100vmax', opacity: 0 }], { duration: 900, easing: 'ease-out', fill: 'forwards' }).onfinish = () => el.remove();
   }
 
-  function multiRipple(color, n) {
-    for (let i = 0; i < n; i++) {
-      setTimeout(() => ripple(color), i * 160);
-    }
-  }
+  function multiRipple(color, n) { for (let i = 0; i < n; i++) { setTimeout(() => ripple(color), i * 160); } }
 
   function pixelNoise(count) {
     for (let i = 0; i < count; i++) {
-      const el = document.createElement('div');
-      const s = rand(4, 16);
-      el.style.cssText = `
-        position: fixed;
-        width: ${s}px;
-        height: ${s}px;
-        background: hsl(${rand(0, 360)}, 70%, 55%);
-        left: ${rand(0, 100)}vw;
-        top: ${rand(0, 100)}vh;
-        pointer-events: none;
-      `;
+      const el = document.createElement('div'); const s = rand(4, 16);
+      el.style.cssText = `position:fixed;width:${s}px;height:${s}px;background:hsl(${rand(0,360)},70%,55%);left:${rand(0,100)}vw;top:${rand(0,100)}vh;pointer-events:none;`;
       overlay.appendChild(el);
-
-      el.animate([
-        { opacity: rand(0.3, 1) },
-        { opacity: 0 }
-      ], { duration: rand(200, 600), delay: rand(0, 300), fill: 'forwards' })
-      .onfinish = () => el.remove();
+      el.animate([{ opacity: rand(0.3, 1) }, { opacity: 0 }], { duration: rand(200, 600), delay: rand(0, 300), fill: 'forwards' }).onfinish = () => el.remove();
     }
   }
 
   function flashInvert() {
-    const el = document.createElement('div');
-    el.style.cssText = `
-      position: fixed;
-      inset: 0;
-      mix-blend-mode: difference;
-      background: white;
-      pointer-events: none;
-    `;
+    const el = document.createElement('div'); el.style.cssText = `position:fixed;inset:0;mix-blend-mode:difference;background:white;pointer-events:none;`;
     overlay.appendChild(el);
-
-    el.animate([
-      { opacity: 1 },
-      { opacity: 0 }
-    ], { duration: 300, fill: 'forwards' })
-    .onfinish = () => el.remove();
+    el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, fill: 'forwards' }).onfinish = () => el.remove();
   }
 
   function crossLines(color) {
     [45, -45].forEach(deg => {
       const el = document.createElement('div');
-      el.style.cssText = `
-        position: fixed;
-        height: 2px;
-        background: ${color};
-        width: 141vw;
-        top: 50%;
-        left: 50%;
-        transform-origin: center;
-        transform: translate(-50%, -50%) rotate(${deg}deg);
-        pointer-events: none;
-        opacity: 0.9;
-      `;
+      el.style.cssText = `position:fixed;height:2px;background:${color};width:141vw;top:50%;left:50%;transform-origin:center;transform:translate(-50%,-50%) rotate(${deg}deg);pointer-events:none;opacity:0.9;`;
       overlay.appendChild(el);
-
-      el.animate([
-        { scaleX: 0, opacity: 0.9 },
-        { scaleX: 1, opacity: 0, offset: 0.7 },
-        { opacity: 0 }
-      ], { duration: 700, easing: 'ease-in-out', fill: 'forwards' })
-      .onfinish = () => el.remove();
+      el.animate([{ scaleX: 0, opacity: 0.9 }, { scaleX: 1, opacity: 0, offset: 0.7 }, { opacity: 0 }], { duration: 700, easing: 'rose-in-out', fill: 'forwards' }).onfinish = () => el.remove();
     });
   }
 
   function burstParticles(n, color) {
-    const cx = vw() / 2;
-    const cy = vh() / 2;
+    const cx = vw() / 2; const cy = vh() / 2;
     for (let i = 0; i < n; i++) {
-      const el = document.createElement('div');
-      const size = rand(4, 14);
-      el.style.cssText = `
-        position: fixed;
-        width: ${size}px;
-        height: ${size}px;
-        border-radius: 50%;
-        background: ${color};
-        left: ${cx}px;
-        top: ${cy}px;
-        pointer-events: none;
-      `;
+      const el = document.createElement('div'); const size = rand(4, 14);
+      el.style.cssText = `position:fixed;width:${size}px;height:${size}px;border-radius:50%;background:${color};left:${cx}px;top:${cy}px;pointer-events:none;`;
       overlay.appendChild(el);
-
-      const angle = rand(0, Math.PI * 2);
-      const dist  = rand(80, 280);
-      el.animate([
-        { transform: 'translate(-50%,-50%) scale(1)', opacity: 0.9 },
-        { transform: `translate(calc(-50% + ${Math.cos(angle) * dist}px), calc(-50% + ${Math.sin(angle) * dist}px)) scale(0)`, opacity: 0 }
-      ], { duration: rand(600, 1100), easing: 'ease-out', fill: 'forwards' })
-      .onfinish = () => el.remove();
+      const angle = rand(0, Math.PI * 2); const dist = rand(80, 280);
+      el.animate([{ transform: 'translate(-50%,-50%) scale(1)', opacity: 0.9 }, { transform: `translate(calc(-50% + ${Math.cos(angle)*dist}px), calc(-50% + ${Math.sin(angle)*dist}px)) scale(0)`, opacity: 0 }], { duration: rand(600, 1100), easing: 'ease-out', fill: 'forwards' }).onfinish = () => el.remove();
     }
   }
 
@@ -529,283 +369,101 @@
     for (let r = 0; r < 5; r++) {
       for (let c = 0; c < 7; c++) {
         const el = document.createElement('div');
-        el.style.cssText = `
-          position: fixed;
-          width: 140px;
-          height: 140px;
-          border: 1.5px solid ${color};
-          pointer-events: none;
-          left: ${c * 140}px;
-          top: ${r * 140}px;
-          opacity: 0;
-        `;
+        el.style.cssText = `position:fixed;width:140px;height:140px;border:1.5px solid ${color};pointer-events:none;left:${c*140}px;top:${r*140}px;opacity:0;`;
         overlay.appendChild(el);
-
-        el.animate([
-          { opacity: 0, transform: 'scale(0.5)' },
-          { opacity: 0.5, transform: 'scale(1)', offset: 0.5 },
-          { opacity: 0, transform: 'scale(1.2)' }
-        ], { duration: 900, delay: (r + c) * 60, fill: 'forwards' })
-        .onfinish = () => el.remove();
+        el.animate([{ opacity: 0, transform: 'scale(0.5)' }, { opacity: 0.5, transform: 'scale(1)', offset: 0.5 }, { opacity: 0, transform: 'scale(1.2)' }], { duration: 900, delay: (r + c) * 60, fill: 'forwards' }).onfinish = () => el.remove();
       }
     }
   }
 
   function bounceBall(color) {
-    const el = document.createElement('div');
-    const size = 36;
-    el.style.cssText = `
-      position: fixed;
-      width: ${size}px;
-      height: ${size}px;
-      border-radius: 50%;
-      background: ${color};
-      left: ${rand(10, 80)}vw;
-      top: 0;
-      pointer-events: none;
-    `;
+    const el = document.createElement('div'); const size = 36;
+    el.style.cssText = `position:fixed;width:${size}px;height:${size}px;border-radius:50%;background:${color};left:${rand(10,80)}vw;top:0;pointer-events:none;`;
     overlay.appendChild(el);
-
-    el.animate([
-      { top: '0px',                     easing: 'ease-in'  },
-      { top: `${vh() - size}px`,        easing: 'ease-out', offset: 0.4 },
-      { top: `${vh() - size * 4}px`,    easing: 'ease-in',  offset: 0.6 },
-      { top: `${vh() - size}px`,        easing: 'ease-out', offset: 0.8 },
-      { top: `${vh() - size * 2}px`,                        offset: 0.9 },
-      { top: `${vh() - size}px`,        opacity: 0 }
-    ], { duration: 1400, fill: 'forwards' })
-    .onfinish = () => el.remove();
+    el.animate([{ top: '0px', easing: 'ease-in' }, { top: `${vh()-size}px`, easing: 'ease-out', offset: 0.4 }, { top: `${vh()-size*4}px`, easing: 'ease-in', offset: 0.6 }, { top: `${vh()-size}px`, easing: 'ease-out', offset: 0.8 }, { top: `${vh()-size*2}px`, offset: 0.9 }, { top: `${vh()-size}px`, opacity: 0 }], { duration: 1400, fill: 'forwards' }).onfinish = () => el.remove();
   }
 
   function countdown(from) {
     let n = from;
     const show = () => {
-      const el = document.createElement('div');
-      el.textContent = n;
-      el.style.cssText = `
-        position: fixed;
-        font-size: 120px;
-        font-weight: 500;
-        color: var(--text-primary, #111);
-        opacity: 0;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        pointer-events: none;
-        font-family: monospace;
-      `;
+      const el = document.createElement('div'); el.textContent = n;
+      el.style.cssText = `position:fixed;font-size:120px;font-weight:500;color:var(--text-primary,#111);opacity:0;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;font-family:monospace;`;
       overlay.appendChild(el);
-
-      el.animate([
-        { opacity: 0.85, transform: 'translate(-50%,-50%) scale(1)' },
-        { opacity: 0,    transform: 'translate(-50%,-50%) scale(1.6)' }
-      ], { duration: 500, fill: 'forwards' })
-      .onfinish = () => {
-        el.remove();
-        if (n > 0) { n--; show(); }
-      };
+      el.animate([{ opacity: 0.85, transform: 'translate(-50%,-50%) scale(1)' }, { opacity: 0, transform: 'translate(-50%,-50%) scale(1.6)' }], { duration: 500, fill: 'forwards' }).onfinish = () => { el.remove(); if (n > 0) { n--; show(); } };
     };
     show();
   }
 
   function zigzag(color) {
     const el = document.createElement('div');
-    el.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: -200px;
-      pointer-events: none;
-      width: 200px;
-      height: 100vh;
-      background: repeating-linear-gradient(
-        -45deg,
-        ${color},
-        ${color} 10px,
-        transparent 10px,
-        transparent 20px
-      );
-      opacity: 0.5;
-    `;
+    el.style.cssText = `position:fixed;top:0;left:-200px;pointer-events:none;width:200px;height:100vh;background:repeating-linear-gradient(-45deg,${color},${color} 10px,transparent 10px,transparent 20px);opacity:0.5;`;
     overlay.appendChild(el);
-
-    el.animate([
-      { transform: 'translateX(0)' },
-      { transform: `translateX(${vw() + 200}px)` }
-    ], { duration: 800, easing: 'linear', fill: 'forwards' })
-    .onfinish = () => el.remove();
+    el.animate([{ transform: 'translateX(0)' }, { transform: `translateX(${vw()+200}px)` }], { duration: 800, easing: 'linear', fill: 'forwards' }).onfinish = () => el.remove();
   }
 
   function rainbowWave() {
     const colors = ['#E24B4A', '#EF9F27', '#639922', '#378ADD', '#534AB7', '#D4537E'];
     colors.forEach((c, i) => {
       setTimeout(() => {
-        const el = document.createElement('div');
-        el.style.cssText = `
-          position: fixed;
-          inset: 0;
-          pointer-events: none;
-          background: ${c};
-          opacity: 0;
-        `;
+        const el = document.createElement('div'); el.style.cssText = `position:fixed;inset:0;pointer-events:none;background:${c};opacity:0;`;
         overlay.appendChild(el);
-
-        el.animate([
-          { opacity: 0 },
-          { opacity: 0.14 },
-          { opacity: 0 }
-        ], { duration: 300, fill: 'forwards' })
-        .onfinish = () => el.remove();
+        el.animate([{ opacity: 0 }, { opacity: 0.14 }, { opacity: 0 }], { duration: 300, fill: 'forwards' }).onfinish = () => el.remove();
       }, i * 120);
     });
   }
 
   function suckIn(n, color) {
     for (let i = 0; i < n; i++) {
-      const el = document.createElement('div');
-      const s  = rand(8, 22);
-      const sx = rand(0, 100);
-      const sy = rand(0, 100);
-      el.style.cssText = `
-        position: fixed;
-        width: ${s}px;
-        height: ${s}px;
-        border-radius: 50%;
-        background: ${color};
-        left: ${sx}vw;
-        top: ${sy}vh;
-        pointer-events: none;
-      `;
+      const el = document.createElement('div'); const s = rand(8, 22); const sx = rand(0, 100); const sy = rand(0, 100);
+      el.style.cssText = `position:fixed;width:${s}px;height:${s}px;border-radius:50%;background:${color};left:${sx}vw;top:${sy}vh;pointer-events:none;`;
       overlay.appendChild(el);
-
-      const dx = vw() / 2 - (sx / 100 * vw());
-      const dy = vh() / 2 - (sy / 100 * vh());
-
-      el.animate([
-        { transform: 'translate(0,0) scale(1)', opacity: 0.8 },
-        { transform: `translate(${dx}px, ${dy}px) scale(0)`, opacity: 0 }
-      ], { duration: rand(500, 1000), easing: 'ease-in', fill: 'forwards' })
-      .onfinish = () => el.remove();
+      const dx = vw() / 2 - (sx / 100 * vw()); const dy = vh() / 2 - (sy / 100 * vh());
+      el.animate([{ transform: 'translate(0,0) scale(1)', opacity: 0.8 }, { transform: `translate(${dx}px, ${dy}px) scale(0)`, opacity: 0 }], { duration: rand(500, 1000), easing: 'ease-in', fill: 'forwards' }).onfinish = () => el.remove();
     }
   }
 
   function blinkDots(n, color) {
     for (let i = 0; i < n; i++) {
-      const el = document.createElement('div');
-      const s  = rand(8, 24);
-      el.style.cssText = `
-        position: fixed;
-        width: ${s}px;
-        height: ${s}px;
-        border-radius: 50%;
-        background: ${color};
-        left: ${rand(0, 100)}vw;
-        top: ${rand(0, 100)}vh;
-        pointer-events: none;
-      `;
+      const el = document.createElement('div'); const s = rand(8, 24);
+      el.style.cssText = `position:fixed;width:${s}px;height:${s}px;border-radius:50%;background:${color};left:${rand(0,100)}vw;top:${rand(0,100)}vh;pointer-events:none;`;
       overlay.appendChild(el);
-
-      el.animate([
-        { opacity: 0 }, { opacity: 1 }, { opacity: 0 }, { opacity: 1 }, { opacity: 0 }
-      ], { duration: rand(400, 900), delay: rand(0, 600), fill: 'forwards' })
-      .onfinish = () => el.remove();
+      el.animate([{ opacity: 0 }, { opacity: 1 }, { opacity: 0 }, { opacity: 1 }, { opacity: 0 }], { duration: rand(400, 900), delay: rand(0, 600), fill: 'forwards' }).onfinish = () => el.remove();
     }
   }
 
   function shakePage() {
-    document.body.animate([
-      { transform: 'translateX(0)' },
-      { transform: 'translateX(-8px)' },
-      { transform: 'translateX(8px)' },
-      { transform: 'translateX(-6px)' },
-      { transform: 'translateX(6px)' },
-      { transform: 'translateX(-3px)' },
-      { transform: 'translateX(0)' }
-    ], { duration: 400, easing: 'linear' });
+    document.body.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-8px)' }, { transform: 'translateX(8px)' }, { transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'translateX(-3px)' }, { transform: 'translateX(0)' }], { duration: 400, easing: 'linear' });
   }
 
   function cornerBall(color) {
-    const el = document.createElement('div');
-    const s  = 32;
-    el.style.cssText = `
-      position: fixed;
-      width: ${s}px;
-      height: ${s}px;
-      border-radius: 50%;
-      background: ${color};
-      pointer-events: none;
-      opacity: 0.85;
-      left: 0;
-      top: 0;
-    `;
+    const el = document.createElement('div'); const s = 32;
+    el.style.cssText = `position:fixed;width:${s}px;height:${s}px;border-radius:50%;background:${color};pointer-events:none;opacity:0.85;left:0;top:0;`;
     overlay.appendChild(el);
-
-    el.animate([
-      { transform: 'translate(0, 0)' },
-      { transform: `translate(${vw() - s}px, ${vh() - s}px)`, offset: 0.5, easing: 'ease-in-out' },
-      { transform: `translate(0, ${vh() - s}px)` }
-    ], { duration: 900, easing: 'ease-in-out', fill: 'forwards' })
-    .onfinish = () => el.remove();
+    el.animate([{ transform: 'translate(0, 0)' }, { transform: `translate(${vw()-s}px, ${vh()-s}px)`, offset: 0.5, easing: 'ease-in-out' }, { transform: `translate(0, ${vh()-s}px)` }], { duration: 900, easing: 'ease-in-out', fill: 'forwards' }).onfinish = () => el.remove();
   }
 
   function colorFlash(color) {
-    const el = document.createElement('div');
-    el.style.cssText = `
-      position: fixed;
-      inset: 0;
-      background: ${color};
-      pointer-events: none;
-      opacity: 0;
-    `;
+    const el = document.createElement('div'); el.style.cssText = `position:fixed;inset:0;background:${color};pointer-events:none;opacity:0;`;
     overlay.appendChild(el);
-
-    el.animate([
-      { opacity: 0 },
-      { opacity: 1 },
-      { opacity: 0 }
-    ], { duration: 500, fill: 'forwards' })
-    .onfinish = () => el.remove();
+    el.animate([{ opacity: 0 }, { opacity: 1 }, { opacity: 0 }], { duration: 500, fill: 'forwards' }).onfinish = () => el.remove();
   }
 
   function orbit(n, color) {
-    const cx    = vw() / 2;
-    const cy    = vh() / 2;
-    const start = Date.now();
-    const dur   = 2000;
-
+    const cx = vw() / 2; const cy = vh() / 2; const start = Date.now(); const dur = 2000;
     const dots = Array.from({ length: n }, (_, i) => {
       const el = document.createElement('div');
-      el.style.cssText = `
-        position: fixed;
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        background: ${color};
-        pointer-events: none;
-        opacity: 0.85;
-      `;
+      el.style.cssText = `position:fixed;width:14px;height:14px;border-radius:50%;background:${color};pointer-events:none;opacity:0.85;`;
       overlay.appendChild(el);
       return { el, phase: (i / n) * Math.PI * 2 };
     });
-
     function frame() {
-      const t = (Date.now() - start) / dur;
-      if (t > 1) {
-        dots.forEach(d => d.el.remove());
-        return;
-      }
-      const angle = t * Math.PI * 4;
-      const r     = 80 + t * 60;
-      dots.forEach(d => {
-        const a = angle + d.phase;
-        d.el.style.left    = (cx + Math.cos(a) * r - 7) + 'px';
-        d.el.style.top     = (cy + Math.sin(a) * r - 7) + 'px';
-        d.el.style.opacity = 1 - t * 0.8;
-      });
+      const t = (Date.now() - start) / dur; if (t > 1) { dots.forEach(d => d.el.remove()); return; }
+      const angle = t * Math.PI * 4; const r = 80 + t * 60;
+      dots.forEach(d => { const a = angle + d.phase; d.el.style.left = (cx + Math.cos(a) * r - 7) + 'px'; d.el.style.top = (cy + Math.sin(a) * r - 7) + 'px'; d.el.style.opacity = 1 - t * 0.8; });
       requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
   }
-
   </script>
 </body>
 </html>
