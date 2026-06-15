@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Button Archive</title>
+  <title>Button Archive Game</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jaro&display=swap" rel="stylesheet">
   <style>
     /* ══════════════════════════════════════════
        전역 리셋 & 기본 설정
@@ -14,137 +15,221 @@
       padding: 0;
     }
 
-    :root {
-      --bg: #ffffff;
-      --surface: #ffffff;
-      --border: rgba(0, 0, 0, 0.12);
-      --border-hover: rgba(0, 0, 0, 0.25);
-      --text-primary: #111111;
-      --text-secondary: #666666;
-      --text-hint: #aaaaaa;
-      --radius-md: 8px;
-      --radius-lg: 12px;
-      --gap: 20px;
-    }
-
     body {
-      background: var(--bg);
-      color: var(--text-primary);
+      background: #E8E8E8;
       font-family: 'Helvetica Neue', Arial, sans-serif;
       min-height: 100vh;
-      padding: 32px 24px 48px;
-    }
-
-    /* ══════════════════════════════════════════
-       헤더
-       ══════════════════════════════════════════ */
-    .header {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-
-    .header h1 {
-      font-size: 28px;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      margin-bottom: 6px;
-    }
-
-    .header p {
-      font-size: 14px;
-      color: var(--text-secondary);
-    }
-
-    /* ══════════════════════════════════════════
-       버튼 그리드
-       ══════════════════════════════════════════ */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: var(--gap);
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    @media (max-width: 600px) {
-      .grid { grid-template-columns: repeat(3, 1fr); }
-    }
-
-    @media (max-width: 380px) {
-      .grid { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    /* ══════════════════════════════════════════
-       개별 버튼 셀
-       ══════════════════════════════════════════ */
-    .btn-cell {
-      aspect-ratio: 1;
-      background: transparent;
-      border: none;
-      border-radius: var(--radius-md);
       display: flex;
-      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    /* 페이지 화면 공통 (피그마 고정 크기 1440x1024 반영) */
+    .page {
+      width: 1440px;
+      height: 1024px;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    /* 화면 전환을 위한 숨김 처리 */
+    .hidden {
+      display: none !important;
+    }
+
+    /* ══════════════════════════════════════════
+       [PAGE 1] 초기 와이어프레임 화면 CSS
+       ══════════════════════════════════════════ */
+    #start-page {
+      background: #E8E8E8;
+    }
+
+    .bppc-text {
+      position: absolute;
+      width: 109px;
+      height: 22px;
+      left: 1289px;
+      top: 965px;
+      font-family: 'Jaro';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 27.3866px;
+      line-height: 22px;
+      text-align: center;
+      color: #000000;
+    }
+
+    /* 메뉴 버튼 공통 스타일 */
+    .menu-rect {
+      position: absolute;
+      width: 528px;
+      height: 160px;
+      left: 456px;
+      background: #414141;
+      border: none;
+      cursor: pointer;
+      display: flex;
       align-items: center;
       justify-content: center;
+      transition: transform 0.1s, background-color 0.2s;
+    }
+    .menu-rect:hover { background: #333333; }
+    .menu-rect:active { transform: scale(0.98); }
+
+    #rect-358 { top: 416px; }
+    #rect-359 { top: 600px; }
+    #rect-360 { top: 784px; }
+
+    .menu-text {
+      font-family: 'Jaro';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 72px;
+      line-height: 52px;
+      text-align: center;
+      letter-spacing: -0.02em;
+      color: #F4F4F4;
+      pointer-events: none;
+    }
+
+    /* 상단 로고 컨테이너 */
+    .logo-container {
+      position: absolute;
+      width: 511px;
+      height: 114px;
+      left: calc(50% - 511px/2);
+      top: 74px;
+    }
+    .logo-container svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* 토글 사각형 공통 스타일 */
+    .toggle-rect {
+      box-sizing: border-box;
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      top: 232px;
+      background: #888888;
+      border: 4px solid #000000;
       cursor: pointer;
-      transition: transform 0.1s;
-      overflow: hidden;
-      position: relative;
+      transition: background-color 0.15s, transform 0.1s;
+    }
+    .toggle-rect:active { transform: scale(0.95); }
+    #rect-346-p1 { left: 456px; }
+    #rect-347-p1 { left: 640px; }
+    #rect-348-p1 { left: 824px; }
+
+
+    /* ══════════════════════════════════════════
+       [PAGE 2] 아카이브 화면 CSS
+       ══════════════════════════════════════════ */
+    #archive-page {
+      background: #E8E8E8;
+    }
+
+    /* [수정] 꿈틀거림 방지를 위한 플렉스 그리드 정렬 */
+    .timer-container {
+      position: absolute;
+      width: 600px; /* 고정 레이아웃 확보 */
+      height: 114px;
+      left: calc(50% - 600px/2);
+      top: 65px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* [수정] 개별 단위 분할 및 가로폭 강제 지정을 통한 미동 방지 설정 */
+    .timer-text-box {
+      font-family: 'Jaro', sans-serif;
+      font-size: 110px;
+      font-weight: 400;
+      color: #FE0154;
+      line-height: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       user-select: none;
     }
 
-    .btn-cell:hover .btn-img {
-      transform: scale(1.04);
+    /* 숫자 블록(분, 초, 0.1초) 각각의 고정 폭 박스 */
+    .timer-unit {
+      width: 110px;        /* Jaro 폰트 110px 크기 기준 두 자리가 절대 안 흔들리는 크기 */
+      text-align: center;
+      display: inline-block;
     }
 
-    .btn-cell:active {
-      transform: scale(0.96);
+    /* 콜론 문자 전용 슬림 박스 */
+    .timer-colon {
+      width: 35px;
+      text-align: center;
+      display: inline-block;
     }
+
+    /* 아카이브 버튼 스타일 */
+    .archive-btn {
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      background: #D9D9D9; 
+      border: 4px solid #000000;
+      cursor: pointer;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.1s;
+      user-select: none;
+    }
+    .archive-btn:hover { transform: scale(1.04); }
+    .archive-btn:active { transform: scale(0.96); }
+
+    /* 버튼 배치 좌표값 */
+    #rect-346 { left: 456px; top: 232px; }
+    #rect-349 { left: 456px; top: 416px; }
+    #rect-352 { left: 456px; top: 600px; }
+    #rect-355 { left: 456px; top: 784px; }
+
+    #rect-347 { left: 640px; top: 232px; }
+    #rect-350 { left: 640px; top: 416px; }
+    #rect-353 { left: 640px; top: 600px; }
+    #rect-356 { left: 640px; top: 784px; }
+
+    #rect-348 { left: 824px; top: 232px; }
+    #rect-351 { left: 824px; top: 416px; }
+    #rect-354 { left: 824px; top: 600px; }
+    #rect-357 { left: 824px; top: 784px; }
 
     .btn-img {
       width: 100%;
       height: 100%;
-      position: absolute;
-      inset: 0;
-      border-radius: var(--radius-md);
-      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.2s ease;
-      z-index: 1;
     }
-
     .img-placeholder {
-      width: 100%;
-      height: 100%;
-      background: #f0f0f0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
+      font-size: 14px;
       font-family: monospace;
-      color: var(--text-hint);
-      letter-spacing: 0.05em;
+      color: #777777;
+      font-weight: bold;
     }
-
     .btn-label {
       position: absolute;
-      bottom: 8px;
-      z-index: 2;
+      bottom: 6px;
       font-size: 10px;
       font-family: monospace;
-      color: var(--text-secondary);
-      letter-spacing: 0.04em;
-      background: rgba(255, 255, 255, 0.75);
-      padding: 2px 6px;
-      border-radius: 4px;
+      color: #333333;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 1px 4px;
+      border-radius: 3px;
       pointer-events: none;
     }
 
-    /* ══════════════════════════════════════════
-       인터랙션 오버레이
-       ══════════════════════════════════════════ */
     #overlay {
       position: fixed;
       inset: 0;
@@ -156,51 +241,149 @@
 </head>
 <body>
 
-  <header class="header">
-    <h1>button archive</h1>
-    <p>버튼을 클릭하면 인터랙션과 개별 지정된 사운드가 재생됩니다</p>
-  </header>
+  <div class="page" id="start-page">
+    <div class="logo-container">
+      <svg width="511" height="114" viewBox="0 0 511 114" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M465.14 73.11C463.725 73.11 463.017 72.4023 463.017 70.9871V56.1274C463.017 55.5047 463.159 55.0518 463.442 54.7688C463.725 54.4291 464.093 54.0895 464.546 53.7498L482.547 42.5413V36.5125L461.743 21.2282C460.894 20.6055 460.47 19.7564 460.47 18.6808V2.12282C460.47 0.707607 461.177 0 462.593 0H486.963C488.038 0 488.887 0.283044 489.51 0.849129L509.295 19.6149C510.144 20.3508 510.568 21.1999 510.568 22.1623V48.4003C510.568 49.4759 510.087 50.4099 509.125 51.2024L486.368 72.1759C485.745 72.7986 484.84 73.11 483.651 73.11H465.14ZM464.291 112.51C462.876 112.51 462.168 111.745 462.168 110.217V83.2146C462.168 81.6861 462.876 80.9219 464.291 80.9219H491.463C492.878 80.9219 493.586 81.6861 493.586 83.2146V110.217C493.586 111.745 492.878 112.51 491.463 112.51H464.291Z" fill="#FE0154"/>
+        <path d="M385.033 113.189C383.618 113.189 382.91 112.481 382.91 111.066V2.12282C382.91 0.707607 383.618 0 385.033 0H433.264C434.622 0 435.754 0.45287 436.66 1.35861L453.643 18.3412C454.605 19.3035 455.086 20.4357 455.086 21.7377V111.066C455.086 112.481 454.379 113.189 452.964 113.189H428.933C427.518 113.189 426.81 112.481 426.81 111.066V22.5868H411.186V111.066C411.186 112.481 410.479 113.189 409.064 113.189H385.033Z" fill="#FE0154"/>
+        <path d="M320.968 113.189C319.666 113.189 318.534 112.708 317.571 111.745L300.589 94.7627C299.626 93.857 299.145 92.7248 299.145 91.3662V21.7377C299.145 20.4357 299.626 19.3035 300.589 18.3412L317.571 1.35861C318.534 0.45287 319.666 0 320.968 0H354.339C355.697 0 356.829 0.45287 357.735 1.35861L374.718 18.3412C375.68 19.3035 376.161 20.4357 376.161 21.7377V91.3662C376.161 92.7248 375.68 93.857 374.718 94.7627L357.735 111.745C356.829 112.708 355.697 113.189 354.339 113.189H320.968ZM330.988 90.5171H344.319C346.696 90.5171 347.885 88.932 347.885 85.762V27.4269C347.885 24.2002 346.696 22.5868 344.319 22.5868H330.988C328.667 22.5868 327.506 24.2002 327.506 27.4269V85.762C327.506 88.932 328.667 90.5171 330.988 90.5171Z" fill="#FE0154"/>
+        <path opacity="0.1" d="M249.246 113.189C247.831 113.189 247.123 112.481 247.123 111.066V22.5868H232.263C230.848 22.5868 230.14 21.8792 230.14 20.464V2.12282C230.14 0.707607 230.848 0 232.263 0H290.259C291.674 0 292.382 0.707607 292.382 2.12282V20.464C292.382 21.8792 291.674 22.5868 290.259 22.5868H275.399V111.066C275.399 112.481 274.691 113.189 273.276 113.189H249.246Z" fill="#FE0154"/>
+        <path d="M180.241 113.189C178.825 113.189 178.118 112.481 178.118 111.066V22.5868H163.258C161.843 22.5868 161.135 21.8792 161.135 20.464V2.12282C161.135 0.707607 161.843 0 163.258 0H221.254C222.669 0 223.376 0.707607 223.376 2.12282V20.464C223.376 21.8792 222.669 22.5868 221.254 22.5868H206.394V111.066C206.394 112.481 205.686 113.189 204.271 113.189H180.241Z" fill="#FE0154"/>
+        <path d="M104.002 113.189C102.644 113.189 101.512 112.708 100.606 111.745L83.6232 94.7627C82.6609 93.857 82.1797 92.7248 82.1797 91.3662V2.12282C82.1797 0.707607 82.8873 0 84.3025 0H108.333C109.748 0 110.456 0.707607 110.456 2.12282V88.8188C110.456 89.951 111.022 90.5171 112.154 90.5171H126.08V2.12282C126.08 0.707607 126.787 0 128.202 0H152.233C153.648 0 154.356 0.707607 154.356 2.12282V111.066C154.356 112.481 153.648 113.189 152.233 113.189H104.002Z" fill="#FE0154"/>
+        <path d="M2.12282 113.189C0.707608 113.189 0 112.481 0 111.066V2.12282C0 0.707607 0.707608 0 2.12282 0H53.2403C54.5423 0 55.6745 0.45287 56.6369 1.35861L73.6194 18.3412C74.5252 19.3035 74.978 20.4357 74.978 21.7377V39.5694C74.978 40.1355 74.8648 40.5883 74.6384 40.928C74.4119 41.2676 74.0723 41.6639 73.6194 42.1168L60.2881 54.0046L59.0144 57.1463L60.2881 59.439L73.6194 71.3268C74.0723 71.7796 74.4119 72.1759 74.6384 72.5156C74.8648 72.7986 74.978 73.2515 74.978 73.8742V91.3662C74.978 92.7248 74.5252 93.857 73.6194 94.7627L56.6369 111.745C55.6745 112.708 54.5423 113.189 53.2403 113.189H2.12282ZM35.9181 94.0834C40.6166 94.0834 43.815 93.1494 45.5133 91.2813C47.2681 89.4132 48.1456 85.8752 48.1456 80.6672C48.1456 75.4026 47.2681 71.8363 45.5133 69.9682C43.815 68.1001 40.6166 67.1661 35.9181 67.1661C31.2762 67.1661 28.0778 68.1001 26.323 69.9682C24.6247 71.8363 23.7756 75.4026 23.7756 80.6672C23.7756 85.8752 24.6247 89.4132 26.323 91.2813C28.0778 93.1494 31.2762 94.0834 35.9181 94.0834ZM35.9181 45.9378C40.6166 45.9378 43.815 45.0038 45.5133 43.1357C47.2681 41.2676 48.1456 37.7296 48.1456 32.5216C48.1456 27.3136 47.2681 23.7756 45.5133 21.9075C43.815 20.0394 40.6166 19.1054 35.9181 19.1054C31.2762 19.1054 28.0778 20.0394 26.323 21.9075C24.6247 23.7756 23.7756 27.3136 23.7756 32.5216C23.7756 37.7296 24.6247 41.2676 26.323 43.1357C28.0778 45.0038 31.2762 45.9378 35.9181 45.9378Z" fill="#FE0154"/>
+      </svg>
+    </div>
 
-  <div class="grid" id="grid"></div>
+    <div class="toggle-rect" id="rect-346-p1"></div>
+    <div class="toggle-rect" id="rect-347-p1"></div>
+    <div class="toggle-rect" id="rect-348-p1"></div>
+
+    <button class="menu-rect" id="rect-358">
+      <span class="menu-text">PRESS TO START</span>
+    </button>
+    <button class="menu-rect" id="rect-359">
+      <span class="menu-text">HOW TO PLAY?</span>
+    </button>
+    <button class="menu-rect" id="rect-360">
+      <span class="menu-text">WHO ARE BPPC</span>
+    </button>
+
+    <div class="bppc-text">@BPPC.26</div>
+  </div>
+
+
+  <div class="page hidden" id="archive-page">
+    <div class="timer-container">
+      <div class="timer-text-box">
+        <span class="timer-unit" id="t-min">00</span>
+        <span class="timer-colon">:</span>
+        <span class="timer-unit" id="t-sec">10</span>
+        <span class="timer-colon">:</span>
+        <span class="timer-unit" id="t-ds">00</span>
+      </div>
+    </div>
+  </div>
+
   <div id="overlay"></div>
 
 
   <script>
   /* ════════════════════════════════════════════════
-     버튼 데이터 (★ 여기서 사운드 경로를 마음대로 수정하세요!)
+     1. 초기 화면 무한 무작위(Random) 색상 토글 로직
      ════════════════════════════════════════════════ */
-  const BUTTONS = [
-    { id: 1,  name: 'BTN-01', img: './images/bt1.png',  sound: './sounds/bts1.mp3' },
-    { id: 2,  name: 'BTN-02', img: './images/bt2.png',  sound: './sounds/bts2.mp3' },
-    { id: 3,  name: 'BTN-03', img: './images/bt3.png',  sound: './sounds/bts3.mp3' },
-    { id: 4,  name: 'BTN-04', img: './images/bt4.png',  sound: './sounds/bts4.mp3' },
-    { id: 5,  name: 'BTN-05', img: './images/bt5.png',  sound: './sounds/bts5.mp3' },
-    { id: 6,  name: 'BTN-06', img: './images/bt6.png',  sound: './sounds/bts6.mp3' },
-    { id: 7,  name: 'BTN-07', img: './images/bt7.png',  sound: './sounds/bts7.mp3' },
-    { id: 8,  name: 'BTN-08', img: './images/bt8.png',  sound: './sounds/bts8.mp3' },
-    { id: 9,  name: 'BTN-09', img: './images/bt9.png',  sound: './sounds/bts9.mp3' },
-    { id: 10, name: 'BTN-10', img: './images/bt10.png', sound: './sounds/bts10.mp3' },
-    { id: 11, name: 'BTN-11', img: './images/bt11.png', sound: './sounds/bts11.mp3' },
-    { id: 12, name: 'BTN-12', img: './images/bt12.png', sound: './sounds/bts12.mp3' },
-    { id: 13, name: 'BTN-13', img: './images/bt13.png', sound: './sounds/bts13.mp3' },
-    { id: 14, name: 'BTN-14', img: './images/bt14.png', sound: './sounds/bts14.mp3' },
-    { id: 15, name: 'BTN-15', img: './images/bt15.png', sound: './sounds/bts15.mp3' },
-    { id: 16, name: 'BTN-16', img: './images/bt16.png', sound: './sounds/bts16.mp3' },
-    { id: 17, name: 'BTN-17', img: './images/bt17.png', sound: './sounds/bts17.mp3' },
-    { id: 18, name: 'BTN-18', img: './images/bt18.png', sound: './sounds/bts18.mp3' },
-    { id: 19, name: 'BTN-19', img: './images/bt19.png', sound: './sounds/bts19.mp3' },
-    { id: 20, name: 'BTN-20', img: './images/bt20.png', sound: './sounds/bts20.mp3' },
-    // 21~25번도 자유롭게 사운드 파일명을 매칭시킬 수 있습니다 (예: click.mp3, alert.wav 등)
-    { id: 21, name: 'BTN-21', sound: './sounds/bts21.mp3' },
-    { id: 22, name: 'BTN-22', sound: './sounds/bts22.mp3' },
-    { id: 23, name: 'BTN-23', sound: './sounds/bts23.mp3' },
-    { id: 24, name: 'BTN-24', sound: './sounds/bts24.mp3' },
-    { id: 25, name: 'BTN-25', sound: './sounds/bts25.mp3' },
-  ];
+  function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
+  const toggleIds = ['rect-346-p1', 'rect-347-p1', 'rect-348-p1'];
+  toggleIds.forEach(id => {
+    const el = document.getElementById(id);
+    if(el) {
+      el.addEventListener('click', () => {
+        el.style.backgroundColor = getRandomColor();
+      });
+    }
+  });
 
 
   /* ════════════════════════════════════════════════
-     인터랙션 맵
+     2. [수정] 10초 무진동 분해형 카운트다운 시스템
+     ════════════════════════════════════════════════ */
+  let timerInterval = null;
+  // [변경] 제한시간 10초 매핑 (10초 * 1000ms = 10,000ms)
+  let remainingTime = 10 * 1000; 
+
+  function startCountdown() {
+    // 각각 분리 배치된 독립 구조 돔 객체 호출
+    const minEl = document.getElementById('t-min');
+    const secEl = document.getElementById('t-sec');
+    const dsEl  = document.getElementById('t-ds');
+    
+    const updateRate = 100; // 0.1초 사이클 갱신 (100ms)
+
+    if (timerInterval) clearInterval(timerInterval);
+
+    timerInterval = setInterval(() => {
+      remainingTime -= updateRate;
+
+      if (remainingTime <= 0) {
+        remainingTime = 0;
+        clearInterval(timerInterval);
+      }
+
+      // 시간 변환 수식 계산
+      const minutes = Math.floor(remainingTime / (60 * 1000));
+      const seconds = Math.floor((remainingTime % (60 * 1000)) / 1000);
+      const deciseconds = Math.floor((remainingTime % 1000) / 100);
+
+      // 개별 영역에 패딩 문자 추가 후 별도로 데이터 주입 
+      // 이 방식으로 인해 텍스트 레이아웃 전체가 절대 밀려나거나 움직이지 않습니다.
+      minEl.textContent = String(minutes).padStart(2, '0');
+      secEl.textContent = String(seconds).padStart(2, '0');
+      dsEl.textContent  = String(deciseconds).padStart(2, '0');
+    }, updateRate);
+  }
+
+
+  /* ════════════════════════════════════════════════
+     3. 화면 전환 및 타이머 트리거
+     ════════════════════════════════════════════════ */
+  const startBtn = document.getElementById('rect-358');
+  const startPage = document.getElementById('start-page');
+  const archivePage = document.getElementById('archive-page');
+
+  startBtn.addEventListener('click', () => {
+    startPage.classList.add('hidden');
+    archivePage.classList.remove('hidden');
+    startCountdown();
+  });
+
+
+  /* ════════════════════════════════════════════════
+     4. 버튼 데이터 세팅
+     ════════════════════════════════════════════════ */
+  const BUTTONS = [
+    { id: 1,  rectId: 'rect-346', name: 'BTN-01', img: './images/bt1.png',  sound: './sounds/bts1.mp3' },
+    { id: 2,  rectId: 'rect-347', name: 'BTN-02', img: './images/bt2.png',  sound: './sounds/bts2.mp3' },
+    { id: 3,  rectId: 'rect-348', name: 'BTN-03', img: './images/bt3.png',  sound: './sounds/bts3.mp3' },
+    { id: 4,  rectId: 'rect-349', name: 'BTN-04', img: './images/bt4.png',  sound: './sounds/bts4.mp3' },
+    { id: 5,  rectId: 'rect-350', name: 'BTN-05', img: './images/bt5.png',  sound: './sounds/bts5.mp3' },
+    { id: 6,  rectId: 'rect-351', name: 'BTN-06', img: './images/bt6.png',  sound: './sounds/bts6.mp3' },
+    { id: 7,  rectId: 'rect-352', name: 'BTN-07', img: './images/bt7.png',  sound: './sounds/bts7.mp3' },
+    { id: 8,  rectId: 'rect-353', name: 'BTN-08', img: './images/bt8.png',  sound: './sounds/bts8.mp3' },
+    { id: 9,  rectId: 'rect-354', name: 'BTN-09', img: './images/bt9.png',  sound: './sounds/bts9.mp3' },
+    { id: 10, rectId: 'rect-355', name: 'BTN-10', img: './images/bt10.png', sound: './sounds/bts10.mp3' },
+    { id: 11, rectId: 'rect-356', name: 'BTN-11', img: './images/bt11.png', sound: './sounds/bts11.mp3' },
+    { id: 12, rectId: 'rect-357', name: 'BTN-12', img: './images/bt12.png', sound: './sounds/bts12.mp3' }
+  ];
+
+  /* ════════════════════════════════════════════════
+     5. 인터랙션 매핑 리스트
      ════════════════════════════════════════════════ */
   const INTERACTIONS = {
     1: () => spawnCircles(20, '#378ADD', 'fall'),
@@ -214,62 +397,43 @@
     9: () => multiRipple('#185FA5', 5),
     10: () => pixelNoise(80),
     11: () => flashInvert(),
-    12: () => crossLines('#E24B4A'),
-    13: () => burstParticles(40, '#D4537E'),
-    14: () => gridExpand('#534AB7'),
-    15: () => bounceBall('#1D9E75'),
-    16: () => countdown(5),
-    17: () => zigzag('#BA7517'),
-    18: () => rainbowWave(),
-    19: () => suckIn(30, '#378ADD'),
-    20: () => blinkDots(15, '#D85A30'),
-    21: () => shakePage(),
-    22: () => flyText(['✊', '✌️', '🖐️'][Math.floor(Math.random() * 3)], '#534AB7', 64),
-    23: () => cornerBall('#1D9E75'),
-    24: () => colorFlash('rgba(83,74,183,0.18)'),
-    25: () => orbit(8, '#534AB7'),
+    12: () => crossLines('#E24B4A')
   };
 
-
   /* ════════════════════════════════════════════════
-     그리드 렌더링 및 동적 사운드 연동
+     6. 아카이브 좌표형 버튼 렌더링 및 이벤트 연결
      ════════════════════════════════════════════════ */
-  const grid    = document.getElementById('grid');
   const overlay = document.getElementById('overlay');
 
   BUTTONS.forEach(btn => {
-    const cell = document.createElement('div');
-    cell.className = 'btn-cell';
+    const btnEl = document.createElement('div');
+    btnEl.className = 'archive-btn';
+    btnEl.id = btn.rectId;
 
     const imgHTML = btn.img
       ? `<img src="${btn.img}" alt="${btn.name}" style="width:100%;height:100%;object-fit:cover;">`
-      : `<div class="img-placeholder">IMG</div>`;
+      : `<div class="img-placeholder">D9D9D9</div>`;
       
-    cell.innerHTML = `
+    btnEl.innerHTML = `
       <div class="btn-img">${imgHTML}</div>
       <span class="btn-label">${btn.name}</span>
     `;
 
-    // 클릭 시 사운드 처리
-    cell.addEventListener('click', () => {
-      // 해당 버튼에 sound 경로가 지정되어 있다면 재생합니다.
+    btnEl.addEventListener('click', () => {
       if (btn.sound) {
         const audio = new Audio(btn.sound);
         audio.play().catch(err => {
-          console.warn(`사운드 로드 실패: ${btn.sound}\n폴더 구조와 파일명을 확인해주세요.`, err);
+          console.warn(`사운드 로드 실패: ${btn.sound}`, err);
         });
       }
-
-      // 기존 시각 인터랙션 실행
       if (INTERACTIONS[btn.id]) INTERACTIONS[btn.id]();
     });
 
-    grid.appendChild(cell);
+    archivePage.appendChild(btnEl);
   });
 
-
   /* ════════════════════════════════════════════════
-     인터랙션 유틸리티 및 함수들
+     7. 시각 인터랙션 함수 세트 (1번~12번)
      ════════════════════════════════════════════════ */
   const vw   = () => window.innerWidth;
   const vh   = () => window.innerHeight;
@@ -350,119 +514,8 @@
       const el = document.createElement('div');
       el.style.cssText = `position:fixed;height:2px;background:${color};width:141vw;top:50%;left:50%;transform-origin:center;transform:translate(-50%,-50%) rotate(${deg}deg);pointer-events:none;opacity:0.9;`;
       overlay.appendChild(el);
-      el.animate([{ scaleX: 0, opacity: 0.9 }, { scaleX: 1, opacity: 0, offset: 0.7 }, { opacity: 0 }], { duration: 700, easing: 'rose-in-out', fill: 'forwards' }).onfinish = () => el.remove();
+      el.animate([{ scaleX: 0, opacity: 0.9 }, { scaleX: 1, opacity: 0, offset: 0.7 }, { opacity: 0 }], { duration: 700, easing: 'ease-in-out', fill: 'forwards' }).onfinish = () => el.remove();
     });
-  }
-
-  function burstParticles(n, color) {
-    const cx = vw() / 2; const cy = vh() / 2;
-    for (let i = 0; i < n; i++) {
-      const el = document.createElement('div'); const size = rand(4, 14);
-      el.style.cssText = `position:fixed;width:${size}px;height:${size}px;border-radius:50%;background:${color};left:${cx}px;top:${cy}px;pointer-events:none;`;
-      overlay.appendChild(el);
-      const angle = rand(0, Math.PI * 2); const dist = rand(80, 280);
-      el.animate([{ transform: 'translate(-50%,-50%) scale(1)', opacity: 0.9 }, { transform: `translate(calc(-50% + ${Math.cos(angle)*dist}px), calc(-50% + ${Math.sin(angle)*dist}px)) scale(0)`, opacity: 0 }], { duration: rand(600, 1100), easing: 'ease-out', fill: 'forwards' }).onfinish = () => el.remove();
-    }
-  }
-
-  function gridExpand(color) {
-    for (let r = 0; r < 5; r++) {
-      for (let c = 0; c < 7; c++) {
-        const el = document.createElement('div');
-        el.style.cssText = `position:fixed;width:140px;height:140px;border:1.5px solid ${color};pointer-events:none;left:${c*140}px;top:${r*140}px;opacity:0;`;
-        overlay.appendChild(el);
-        el.animate([{ opacity: 0, transform: 'scale(0.5)' }, { opacity: 0.5, transform: 'scale(1)', offset: 0.5 }, { opacity: 0, transform: 'scale(1.2)' }], { duration: 900, delay: (r + c) * 60, fill: 'forwards' }).onfinish = () => el.remove();
-      }
-    }
-  }
-
-  function bounceBall(color) {
-    const el = document.createElement('div'); const size = 36;
-    el.style.cssText = `position:fixed;width:${size}px;height:${size}px;border-radius:50%;background:${color};left:${rand(10,80)}vw;top:0;pointer-events:none;`;
-    overlay.appendChild(el);
-    el.animate([{ top: '0px', easing: 'ease-in' }, { top: `${vh()-size}px`, easing: 'ease-out', offset: 0.4 }, { top: `${vh()-size*4}px`, easing: 'ease-in', offset: 0.6 }, { top: `${vh()-size}px`, easing: 'ease-out', offset: 0.8 }, { top: `${vh()-size*2}px`, offset: 0.9 }, { top: `${vh()-size}px`, opacity: 0 }], { duration: 1400, fill: 'forwards' }).onfinish = () => el.remove();
-  }
-
-  function countdown(from) {
-    let n = from;
-    const show = () => {
-      const el = document.createElement('div'); el.textContent = n;
-      el.style.cssText = `position:fixed;font-size:120px;font-weight:500;color:var(--text-primary,#111);opacity:0;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;font-family:monospace;`;
-      overlay.appendChild(el);
-      el.animate([{ opacity: 0.85, transform: 'translate(-50%,-50%) scale(1)' }, { opacity: 0, transform: 'translate(-50%,-50%) scale(1.6)' }], { duration: 500, fill: 'forwards' }).onfinish = () => { el.remove(); if (n > 0) { n--; show(); } };
-    };
-    show();
-  }
-
-  function zigzag(color) {
-    const el = document.createElement('div');
-    el.style.cssText = `position:fixed;top:0;left:-200px;pointer-events:none;width:200px;height:100vh;background:repeating-linear-gradient(-45deg,${color},${color} 10px,transparent 10px,transparent 20px);opacity:0.5;`;
-    overlay.appendChild(el);
-    el.animate([{ transform: 'translateX(0)' }, { transform: `translateX(${vw()+200}px)` }], { duration: 800, easing: 'linear', fill: 'forwards' }).onfinish = () => el.remove();
-  }
-
-  function rainbowWave() {
-    const colors = ['#E24B4A', '#EF9F27', '#639922', '#378ADD', '#534AB7', '#D4537E'];
-    colors.forEach((c, i) => {
-      setTimeout(() => {
-        const el = document.createElement('div'); el.style.cssText = `position:fixed;inset:0;pointer-events:none;background:${c};opacity:0;`;
-        overlay.appendChild(el);
-        el.animate([{ opacity: 0 }, { opacity: 0.14 }, { opacity: 0 }], { duration: 300, fill: 'forwards' }).onfinish = () => el.remove();
-      }, i * 120);
-    });
-  }
-
-  function suckIn(n, color) {
-    for (let i = 0; i < n; i++) {
-      const el = document.createElement('div'); const s = rand(8, 22); const sx = rand(0, 100); const sy = rand(0, 100);
-      el.style.cssText = `position:fixed;width:${s}px;height:${s}px;border-radius:50%;background:${color};left:${sx}vw;top:${sy}vh;pointer-events:none;`;
-      overlay.appendChild(el);
-      const dx = vw() / 2 - (sx / 100 * vw()); const dy = vh() / 2 - (sy / 100 * vh());
-      el.animate([{ transform: 'translate(0,0) scale(1)', opacity: 0.8 }, { transform: `translate(${dx}px, ${dy}px) scale(0)`, opacity: 0 }], { duration: rand(500, 1000), easing: 'ease-in', fill: 'forwards' }).onfinish = () => el.remove();
-    }
-  }
-
-  function blinkDots(n, color) {
-    for (let i = 0; i < n; i++) {
-      const el = document.createElement('div'); const s = rand(8, 24);
-      el.style.cssText = `position:fixed;width:${s}px;height:${s}px;border-radius:50%;background:${color};left:${rand(0,100)}vw;top:${rand(0,100)}vh;pointer-events:none;`;
-      overlay.appendChild(el);
-      el.animate([{ opacity: 0 }, { opacity: 1 }, { opacity: 0 }, { opacity: 1 }, { opacity: 0 }], { duration: rand(400, 900), delay: rand(0, 600), fill: 'forwards' }).onfinish = () => el.remove();
-    }
-  }
-
-  function shakePage() {
-    document.body.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-8px)' }, { transform: 'translateX(8px)' }, { transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'translateX(-3px)' }, { transform: 'translateX(0)' }], { duration: 400, easing: 'linear' });
-  }
-
-  function cornerBall(color) {
-    const el = document.createElement('div'); const s = 32;
-    el.style.cssText = `position:fixed;width:${s}px;height:${s}px;border-radius:50%;background:${color};pointer-events:none;opacity:0.85;left:0;top:0;`;
-    overlay.appendChild(el);
-    el.animate([{ transform: 'translate(0, 0)' }, { transform: `translate(${vw()-s}px, ${vh()-s}px)`, offset: 0.5, easing: 'ease-in-out' }, { transform: `translate(0, ${vh()-s}px)` }], { duration: 900, easing: 'ease-in-out', fill: 'forwards' }).onfinish = () => el.remove();
-  }
-
-  function colorFlash(color) {
-    const el = document.createElement('div'); el.style.cssText = `position:fixed;inset:0;background:${color};pointer-events:none;opacity:0;`;
-    overlay.appendChild(el);
-    el.animate([{ opacity: 0 }, { opacity: 1 }, { opacity: 0 }], { duration: 500, fill: 'forwards' }).onfinish = () => el.remove();
-  }
-
-  function orbit(n, color) {
-    const cx = vw() / 2; const cy = vh() / 2; const start = Date.now(); const dur = 2000;
-    const dots = Array.from({ length: n }, (_, i) => {
-      const el = document.createElement('div');
-      el.style.cssText = `position:fixed;width:14px;height:14px;border-radius:50%;background:${color};pointer-events:none;opacity:0.85;`;
-      overlay.appendChild(el);
-      return { el, phase: (i / n) * Math.PI * 2 };
-    });
-    function frame() {
-      const t = (Date.now() - start) / dur; if (t > 1) { dots.forEach(d => d.el.remove()); return; }
-      const angle = t * Math.PI * 4; const r = 80 + t * 60;
-      dots.forEach(d => { const a = angle + d.phase; d.el.style.left = (cx + Math.cos(a) * r - 7) + 'px'; d.el.style.top = (cy + Math.sin(a) * r - 7) + 'px'; d.el.style.opacity = 1 - t * 0.8; });
-      requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
   }
   </script>
 </body>
