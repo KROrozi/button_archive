@@ -132,19 +132,19 @@
       background: #E8E8E8;
     }
 
-    /* [수정] 꿈틀거림 방지를 위한 플렉스 그리드 정렬 */
+    /* 타이머 컨테이너 레이아웃 확장 */
     .timer-container {
       position: absolute;
-      width: 600px; /* 고정 레이아웃 확보 */
+      width: 700px; 
       height: 114px;
-      left: calc(50% - 600px/2);
+      left: calc(50% - 700px/2);
       top: 65px;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    /* [수정] 개별 단위 분할 및 가로폭 강제 지정을 통한 미동 방지 설정 */
+    /* [수정] 간격을 넓히고 가독성을 극대화한 가로폭 설계 (안 겹치게 수정) */
     .timer-text-box {
       font-family: 'Jaro', sans-serif;
       font-size: 110px;
@@ -157,21 +157,47 @@
       user-select: none;
     }
 
-    /* 숫자 블록(분, 초, 0.1초) 각각의 고정 폭 박스 */
+    /* 숫자 간 격리 확보를 위해 너비를 140px로 확장 및 자간 조정 */
     .timer-unit {
-      width: 110px;        /* Jaro 폰트 110px 크기 기준 두 자리가 절대 안 흔들리는 크기 */
+      width: 140px;        
       text-align: center;
       display: inline-block;
+      letter-spacing: 2px;
     }
 
-    /* 콜론 문자 전용 슬림 박스 */
+    /* 콜론 영역도 여유롭게 배치 */
     .timer-colon {
-      width: 35px;
+      width: 50px;
       text-align: center;
       display: inline-block;
     }
 
-    /* 아카이브 버튼 스타일 */
+    /* [신규] 우측 상단 전체 리셋 버튼 스타일 */
+    .global-reset-btn {
+      position: absolute;
+      width: 160px;
+      height: 50px;
+      right: 50px;
+      top: 65px;
+      background: #414141;
+      border: 3px solid #000000;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s, transform 0.1s;
+      z-index: 10;
+    }
+    .global-reset-btn:hover { background: #333333; }
+    .global-reset-btn:active { transform: scale(0.95); }
+    .global-reset-text {
+      font-family: 'Jaro', sans-serif;
+      font-size: 24px;
+      color: #F4F4F4;
+      letter-spacing: 1px;
+    }
+
+    /* 아카이브 버튼 스타일 (사라지는 애니메이션 추가) */
     .archive-btn {
       position: absolute;
       width: 160px;
@@ -183,11 +209,18 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.1s;
+      transition: transform 0.1s, opacity 0.3s ease;
       user-select: none;
+      opacity: 1;
     }
     .archive-btn:hover { transform: scale(1.04); }
     .archive-btn:active { transform: scale(0.96); }
+    
+    /* 버튼이 사라질 때 적용될 클래스 */
+    .archive-btn.vanished {
+      opacity: 0;
+      pointer-events: none; /* 클릭 비활성화 */
+    }
 
     /* 버튼 배치 좌표값 */
     #rect-346 { left: 456px; top: 232px; }
@@ -273,6 +306,10 @@
 
 
   <div class="page hidden" id="archive-page">
+    <button class="global-reset-btn" id="global-reset-btn">
+      <span class="global-reset-text">RESET ALL</span>
+    </button>
+
     <div class="timer-container">
       <div class="timer-text-box">
         <span class="timer-unit" id="t-min">00</span>
@@ -312,19 +349,29 @@
 
 
   /* ════════════════════════════════════════════════
-     2. [수정] 10초 무진동 분해형 카운트다운 시스템
+     2. 10초 카운트다운 타이머 코어 로직
      ════════════════════════════════════════════════ */
   let timerInterval = null;
-  // [변경] 제한시간 10초 매핑 (10초 * 1000ms = 10,000ms)
-  let remainingTime = 10 * 1000; 
+  const INITIAL_TIME = 10 * 1000; // 10초 세팅 고정 기준점
+  let remainingTime = INITIAL_TIME; 
+
+  const minEl = document.getElementById('t-min');
+  const secEl = document.getElementById('t-sec');
+  const dsEl  = document.getElementById('t-ds');
+
+  // 디스플레이 텍스트만 리렌더링하는 모듈형 함수
+  function renderTimerDisplay() {
+    const minutes = Math.floor(remainingTime / (60 * 1000));
+    const seconds = Math.floor((remainingTime % (60 * 1000)) / 1000);
+    const deciseconds = Math.floor((remainingTime % 1000) / 100);
+
+    minEl.textContent = String(minutes).padStart(2, '0');
+    secEl.textContent = String(seconds).padStart(2, '0');
+    dsEl.textContent  = String(deciseconds).padStart(2, '0');
+  }
 
   function startCountdown() {
-    // 각각 분리 배치된 독립 구조 돔 객체 호출
-    const minEl = document.getElementById('t-min');
-    const secEl = document.getElementById('t-sec');
-    const dsEl  = document.getElementById('t-ds');
-    
-    const updateRate = 100; // 0.1초 사이클 갱신 (100ms)
+    const updateRate = 100; // 0.1초 정밀 갱신 루프
 
     if (timerInterval) clearInterval(timerInterval);
 
@@ -335,32 +382,46 @@
         remainingTime = 0;
         clearInterval(timerInterval);
       }
-
-      // 시간 변환 수식 계산
-      const minutes = Math.floor(remainingTime / (60 * 1000));
-      const seconds = Math.floor((remainingTime % (60 * 1000)) / 1000);
-      const deciseconds = Math.floor((remainingTime % 1000) / 100);
-
-      // 개별 영역에 패딩 문자 추가 후 별도로 데이터 주입 
-      // 이 방식으로 인해 텍스트 레이아웃 전체가 절대 밀려나거나 움직이지 않습니다.
-      minEl.textContent = String(minutes).padStart(2, '0');
-      secEl.textContent = String(seconds).padStart(2, '0');
-      dsEl.textContent  = String(deciseconds).padStart(2, '0');
+      renderTimerDisplay();
     }, updateRate);
+  }
+
+  // [신규] 타이머 초기 리셋 함수
+  function resetTimer() {
+    remainingTime = INITIAL_TIME;
+    renderTimerDisplay();
   }
 
 
   /* ════════════════════════════════════════════════
-     3. 화면 전환 및 타이머 트리거
+     3. 화면 전환 액션 핸들러
      ════════════════════════════════════════════════ */
   const startBtn = document.getElementById('rect-358');
   const startPage = document.getElementById('start-page');
   const archivePage = document.getElementById('archive-page');
+  const globalResetBtn = document.getElementById('global-reset-btn');
 
+  // 게임 시작
   startBtn.addEventListener('click', () => {
     startPage.classList.add('hidden');
     archivePage.classList.remove('hidden');
+    resetTimer();
     startCountdown();
+  });
+
+  // [신규] 전체 리셋 및 첫 페이지 컴백 로직
+  globalResetBtn.addEventListener('click', () => {
+    // 1. 타이머 완전 정지 및 리셋
+    if (timerInterval) clearInterval(timerInterval);
+    resetTimer();
+
+    // 2. 사라졌던 모든 아카이브 버튼 일괄 복구
+    const allButtons = document.querySelectorAll('.archive-btn');
+    allButtons.forEach(btn => btn.classList.remove('vanished'));
+
+    // 3. 첫 페이지 화면 전환
+    archivePage.classList.add('hidden');
+    startPage.classList.remove('hidden');
   });
 
 
@@ -401,7 +462,7 @@
   };
 
   /* ════════════════════════════════════════════════
-     6. 아카이브 좌표형 버튼 렌더링 및 이벤트 연결
+     6. 아카이브 좌표형 버튼 생성 및 트리거 결합
      ════════════════════════════════════════════════ */
   const overlay = document.getElementById('overlay');
 
@@ -419,14 +480,26 @@
       <span class="btn-label">${btn.name}</span>
     `;
 
+    // 버튼 클릭 이벤트
     btnEl.addEventListener('click', () => {
+      // 이미 사라진 상태라면 중복 작동 방지
+      if (btnEl.classList.contains('vanished')) return;
+
+      // 사운드 재생
       if (btn.sound) {
         const audio = new Audio(btn.sound);
-        audio.play().catch(err => {
-          console.warn(`사운드 로드 실패: ${btn.sound}`, err);
-        });
+        audio.play().catch(err => console.warn(`사운드 로드 실패: ${btn.sound}`, err));
       }
+
+      // 1. 고유 비주얼 인터랙션 연출 실행
       if (INTERACTIONS[btn.id]) INTERACTIONS[btn.id]();
+
+      // [수정] 2. 해당 버튼 제거(클래스 주입)
+      btnEl.classList.add('vanished');
+
+      // [수정] 3. 타이머 즉시 리셋 후 새 출발 카운트
+      resetTimer();
+      startCountdown();
     });
 
     archivePage.appendChild(btnEl);
