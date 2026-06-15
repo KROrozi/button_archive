@@ -332,10 +332,9 @@
             ? `<img src="${btn.img}" alt="${btn.name}" />`
             : `<div class="img-placeholder">IMG</div>`;
     */
-    const imgHTML = bt.img
-  ? `<img src="${bt.img}" alt="${bt.name}" style="width:100%;height:100%;object-fit:contain;">`
+    const imgHTML = btn.img
+  ? `<img src="${btn.img}" alt="${btn.name}" style="width:100%;height:100%;object-fit:contain;">`
   : `<div class="img-placeholder">IMG</div>`;
-
     cell.innerHTML = `
       <div class="btn-img">${imgHTML}</div>
       <span class="btn-label">${btn.name}</span>
