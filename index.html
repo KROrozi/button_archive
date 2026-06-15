@@ -15,7 +15,7 @@
     }
 
     :root {
-      --bg: #f5f5f5;
+      --bg: #ffffff; /* 페이지 배경 흰색으로 변경 */
       --surface: #ffffff;
       --border: rgba(0, 0, 0, 0.12);
       --border-hover: rgba(0, 0, 0, 0.25);
@@ -24,20 +24,7 @@
       --text-hint: #aaaaaa;
       --radius-md: 8px;
       --radius-lg: 12px;
-      --gap: 10px;
-    }
-
-    /* 다크모드 대응 */
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #1a1a1a;
-        --surface: #242424;
-        --border: rgba(255, 255, 255, 0.12);
-        --border-hover: rgba(255, 255, 255, 0.28);
-        --text-primary: #f0f0f0;
-        --text-secondary: #999999;
-        --text-hint: #555555;
-      }
+      --gap: 20px; /* 이미지 사이의 간격을 20px로 확대 */
     }
 
     body {
@@ -70,7 +57,6 @@
 
     /* ══════════════════════════════════════════
        버튼 그리드
-       5열 × 5행 = 25개
        ══════════════════════════════════════════ */
     .grid {
       display: grid;
@@ -90,85 +76,81 @@
     }
 
     /* ══════════════════════════════════════════
-       개별 버튼 셀
+       개별 버튼 셀 (외곽 박스 제거 및 풀사이즈화)
        ══════════════════════════════════════════ */
     .btn-cell {
       aspect-ratio: 1;
-      background: var(--surface);
-      border: 0.5px solid var(--border);
+      background: transparent; /* 외곽 박스 배경 제거 */
+      border: none; /* 외곽 박스 테두리 제거 */
       border-radius: var(--radius-md);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 7px;
       cursor: pointer;
-      transition: background 0.15s, border-color 0.15s, transform 0.1s;
+      transition: transform 0.1s;
       overflow: hidden;
       position: relative;
       user-select: none;
     }
 
-    .btn-cell:hover {
-      background: rgba(0, 0, 0, 0.04);
-      border-color: var(--border-hover);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .btn-cell:hover { background: rgba(255, 255, 255, 0.05); }
+    /* 호버 시 이미지 슬쩍 커지는 효과 추가 */
+    .btn-cell:hover .btn-img {
+      transform: scale(1.04);
     }
 
     .btn-cell:active {
-      transform: scale(0.95);
+      transform: scale(0.96);
     }
 
     /* ══════════════════════════════════════════
-       버튼 내 이미지 영역
-       추후 수정: .btn-img > img 추가, .img-placeholder 제거
+       버튼 내 이미지 영역 (박스 크기만큼 꽉 차게 변경)
        ══════════════════════════════════════════ */
     .btn-img {
-      width: 60%;
-      aspect-ratio: 2 / 1;
-      border-radius: 4px;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-md);
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: transform 0.2s ease;
+      z-index: 1;
     }
 
-    /* 더미 플레이스홀더 — 추후 삭제 */
+    /* 플레이스홀더도 박스 크기에 맞춤 */
     .img-placeholder {
       width: 100%;
       height: 100%;
-      background: var(--border);
+      background: #f0f0f0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 9px;
+      font-size: 11px;
       font-family: monospace;
       color: var(--text-hint);
       letter-spacing: 0.05em;
     }
 
-    /* 실제 이미지 태그 — 추후 활성화
-    .btn-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-    */
-
-    /* 버튼 라벨 */
+    /* 버튼 라벨 (이미지 위에 얹어지도록 스타일 수정) */
     .btn-label {
+      position: absolute;
+      bottom: 8px;
+      z-index: 2;
       font-size: 10px;
       font-family: monospace;
       color: var(--text-secondary);
       letter-spacing: 0.04em;
+      background: rgba(255, 255, 255, 0.75); /* 이미지 위에서도 글자가 보이도록 반투명 배경 추가 */
+      padding: 2px 6px;
+      border-radius: 4px;
+      pointer-events: none;
     }
 
     /* ══════════════════════════════════════════
        인터랙션 오버레이 컨테이너
-       fixed로 전체 화면 덮음 / pointer-events:none
        ══════════════════════════════════════════ */
     #overlay {
       position: fixed;
@@ -181,142 +163,83 @@
 </head>
 <body>
 
-  <!-- 헤더 -->
   <header class="header">
     <h1>button archive</h1>
     <p>버튼을 클릭하면 인터랙션이 실행됩니다</p>
   </header>
 
-  <!-- 버튼 그리드 — JS로 렌더링 -->
   <div class="grid" id="grid"></div>
 
-  <!-- 인터랙션 파티클 등이 생성되는 오버레이 -->
   <div id="overlay"></div>
 
 
   <script>
   /* ════════════════════════════════════════════════
-     버튼 데이터
-     추후 수정:
-       - name: 버튼 표시 이름 변경
-       - img:  이미지 경로 추가 (추후)
+     버튼 데이터 (경로 절대 유지)
      ════════════════════════════════════════════════ */
   const BUTTONS = [
-    { id: 1,  name: 'BTN-01', img: './images/bt1.png' }, // 버튼 01 — 추후 이름/이미지 교체
-    { id: 2,  name: 'BTN-02', img: './images/bt2.png' }, // 버튼 02
-    { id: 3,  name: 'BTN-03', img: './images/bt3.png' }, // 버튼 03
-    { id: 4,  name: 'BTN-04', img: './images/bt4.png' }, // 버튼 04
-    { id: 5,  name: 'BTN-05', img: './images/bt5.png' }, // 버튼 05
-    { id: 6,  name: 'BTN-06', img: './images/bt6.png' }, // 버튼 06
-    { id: 7,  name: 'BTN-07', img: './images/bt7.png' }, // 버튼 07
-    { id: 8,  name: 'BTN-08', img: './images/bt8.png' }, // 버튼 08
-    { id: 9,  name: 'BTN-09', img: './images/bt9.png' }, // 버튼 09
-    { id: 10, name: 'BTN-10', img: './images/bt10.png' }, // 버튼 10
-    { id: 11, name: 'BTN-11', img: './images/bt11.png' }, // 버튼 11
-    { id: 12, name: 'BTN-12', img: './images/bt12.png' }, // 버튼 12
-    { id: 13, name: 'BTN-13', img: './images/bt13.png' }, // 버튼 13
-    { id: 14, name: 'BTN-14', img: './images/bt14.png' }, // 버튼 14
-    { id: 15, name: 'BTN-15', img: './images/bt15.png' }, // 버튼 15
-    { id: 16, name: 'BTN-16', img: './images/bt16.png' }, // 버튼 16
-    { id: 17, name: 'BTN-17', img: './images/bt17.png' }, // 버튼 17
-    { id: 18, name: 'BTN-18', img: './images/bt18.png' }, // 버튼 18
-    { id: 19, name: 'BTN-19', img: './images/bt19.png' }, // 버튼 19
-    { id: 20, name: 'BTN-20', img: './images/bt20.png' }, // 버튼 20
-    { id: 21, name: 'BTN-21' }, // 버튼 21
-    { id: 22, name: 'BTN-22' }, // 버튼 22
-    { id: 23, name: 'BTN-23' }, // 버튼 23
-    { id: 24, name: 'BTN-24' }, // 버튼 24
-    { id: 25, name: 'BTN-25' }, // 버튼 25
+    { id: 1,  name: 'BTN-01', img: './images/bt1.png' },
+    { id: 2,  name: 'BTN-02', img: './images/bt2.png' },
+    { id: 3,  name: 'BTN-03', img: './images/bt3.png' },
+    { id: 4,  name: 'BTN-04', img: './images/bt4.png' },
+    { id: 5,  name: 'BTN-05', img: './images/bt5.png' },
+    { id: 6,  name: 'BTN-06', img: './images/bt6.png' },
+    { id: 7,  name: 'BTN-07', img: './images/bt7.png' },
+    { id: 8,  name: 'BTN-08', img: './images/bt8.png' },
+    { id: 9,  name: 'BTN-09', img: './images/bt9.png' },
+    { id: 10, name: 'BTN-10', img: './images/bt10.png' },
+    { id: 11, name: 'BTN-11', img: './images/bt11.png' },
+    { id: 12, name: 'BTN-12', img: './images/bt12.png' },
+    { id: 13, name: 'BTN-13', img: './images/bt13.png' },
+    { id: 14, name: 'BTN-14', img: './images/bt14.png' },
+    { id: 15, name: 'BTN-15', img: './images/bt15.png' },
+    { id: 16, name: 'BTN-16', img: './images/bt16.png' },
+    { id: 17, name: 'BTN-17', img: './images/bt17.png' },
+    { id: 18, name: 'BTN-18', img: './images/bt18.png' },
+    { id: 19, name: 'BTN-19', img: './images/bt19.png' },
+    { id: 20, name: 'BTN-20', img: './images/bt20.png' },
+    { id: 21, name: 'BTN-21' },
+    { id: 22, name: 'BTN-22' },
+    { id: 23, name: 'BTN-23' },
+    { id: 24, name: 'BTN-24' },
+    { id: 25, name: 'BTN-25' },
   ];
 
 
   /* ════════════════════════════════════════════════
      인터랙션 맵
-     추후 수정:
-       각 번호의 함수 내용을 버튼에 맞게 교체
-       ex) 1: () => myCustomInteraction(),
      ════════════════════════════════════════════════ */
   const INTERACTIONS = {
-
-    // 01 — 파란 공들이 위에서 아래로 낙하
     1: () => spawnCircles(20, '#378ADD', 'fall'),
-
-    // 02 — 빨간 공들이 중앙에서 폭발
     2: () => spawnCircles(30, '#E24B4A', 'explode'),
-
-    // 03 — "click!" 텍스트가 위로 날아감
     3: () => flyText('click!', '#534AB7', 18),
-
-    // 04 — 녹색 별들이 화면에 흩뿌려짐
     4: () => spawnStars(25, '#639922'),
-
-    // 05 — 청록색 수평 스캔선이 아래로 이동
     5: () => scanLine('horizontal', '#1D9E75'),
-
-    // 06 — 핑크 수직 스캔선이 오른쪽으로 이동
     6: () => scanLine('vertical', '#D4537E'),
-
-    // 07 — 주황 알파벳 글자 비
     7: () => letterRain('ABCDEFGHIJK', '#BA7517'),
-
-    // 08 — 오렌지 단일 ripple 파문
     8: () => ripple('#EF9F27'),
-
-    // 09 — 파란 ripple 5개 연속 발생
     9: () => multiRipple('#185FA5', 5),
-
-    // 10 — 랜덤 색상 픽셀 노이즈 깜빡임
     10: () => pixelNoise(80),
-
-    // 11 — 화면 반전(invert) 플래시
     11: () => flashInvert(),
-
-    // 12 — 빨간 X자 선이 화면을 가로지름
     12: () => crossLines('#E24B4A'),
-
-    // 13 — 화면 중앙에서 핑크 파티클 폭발
     13: () => burstParticles(40, '#D4537E'),
-
-    // 14 — 보라색 격자가 화면 전체로 확장
     14: () => gridExpand('#534AB7'),
-
-    // 15 — 초록 공이 중력 받아 바운스
     15: () => bounceBall('#1D9E75'),
-
-    // 16 — 화면 중앙에 숫자 카운트다운 5→0
     16: () => countdown(5),
-
-    // 17 — 주황 지그재그 줄무늬가 옆으로 이동
     17: () => zigzag('#BA7517'),
-
-    // 18 — 무지개 색상이 순서대로 화면을 덮음
     18: () => rainbowWave(),
-
-    // 19 — 파란 점들이 화면 중앙으로 흡입
     19: () => suckIn(30, '#378ADD'),
-
-    // 20 — 주황 점들이 랜덤 위치에서 깜빡임
     20: () => blinkDots(15, '#D85A30'),
-
-    // 21 — 화면 전체가 좌우로 흔들림 (shake)
     21: () => shakePage(),
-
-    // 22 — 가위바위보 이모지 랜덤으로 날아오름
     22: () => flyText(['✊', '✌️', '🖐️'][Math.floor(Math.random() * 3)], '#534AB7', 64),
-
-    // 23 — 초록 공이 좌상단→우하단→좌하단 이동
     23: () => cornerBall('#1D9E75'),
-
-    // 24 — 화면이 연보라색으로 잠깐 플래시
     24: () => colorFlash('rgba(83,74,183,0.18)'),
-
-    // 25 — 보라 공들이 화면 중앙을 중심으로 공전
     25: () => orbit(8, '#534AB7'),
   };
 
 
   /* ════════════════════════════════════════════════
-     그리드 렌더링
+     그리드 렌더링 (object-fit: cover로 채움 처리)
      ════════════════════════════════════════════════ */
   const grid    = document.getElementById('grid');
   const overlay = document.getElementById('overlay');
@@ -325,16 +248,11 @@
     const cell = document.createElement('div');
     cell.className = 'btn-cell';
 
-    /* 추후 이미지 교체 방법:
-       1. BUTTONS 배열에 img 경로 추가: { id:1, name:'BTN-01', img:'./images/btn01.png' }
-       2. 아래 imgHTML을 다음으로 교체:
-          const imgHTML = btn.img
-            ? `<img src="${btn.img}" alt="${btn.name}" />`
-            : `<div class="img-placeholder">IMG</div>`;
-    */
+    // 이미지가 박스 안에 여백 없이 꽉 차도록 object-fit: cover 적용
     const imgHTML = btn.img
-  ? `<img src="${btn.img}" alt="${btn.name}" style="width:100%;height:100%;object-fit:contain;">`
-  : `<div class="img-placeholder">IMG</div>`;
+      ? `<img src="${btn.img}" alt="${btn.name}" style="width:100%;height:100%;object-fit:cover;">`
+      : `<div class="img-placeholder">IMG</div>`;
+      
     cell.innerHTML = `
       <div class="btn-img">${imgHTML}</div>
       <span class="btn-label">${btn.name}</span>
@@ -358,11 +276,8 @@
 
   /* ════════════════════════════════════════════════
      인터랙션 함수 25개
-     추후 수정: 각 함수 내용을 버튼 특성에 맞게 교체
      ════════════════════════════════════════════════ */
 
-  /* [01][02] 원형 파티클 — 낙하 or 폭발
-     mode: 'fall' | 'explode' */
   function spawnCircles(count, color, mode) {
     for (let i = 0; i < count; i++) {
       const el = document.createElement('div');
@@ -395,7 +310,6 @@
     }
   }
 
-  /* [03][22] 텍스트가 위로 날아가는 효과 */
   function flyText(txt, color, size) {
     const el = document.createElement('div');
     el.textContent = txt;
@@ -419,7 +333,6 @@
     .onfinish = () => el.remove();
   }
 
-  /* [04] 별★ 파티클 */
   function spawnStars(count, color) {
     for (let i = 0; i < count; i++) {
       const el = document.createElement('div');
@@ -444,8 +357,6 @@
     }
   }
 
-  /* [05][06] 스캔선 — 수평 or 수직
-     dir: 'horizontal' | 'vertical' */
   function scanLine(dir, color) {
     const el = document.createElement('div');
     const isH = dir === 'horizontal';
@@ -468,7 +379,6 @@
     .onfinish = () => el.remove();
   }
 
-  /* [07] 글자 비 — 문자열에서 랜덤 선택해 낙하 */
   function letterRain(chars, color) {
     for (let i = 0; i < 18; i++) {
       const el = document.createElement('div');
@@ -492,7 +402,6 @@
     }
   }
 
-  /* [08] 화면 중앙에서 바깥으로 퍼지는 ripple */
   function ripple(color) {
     const el = document.createElement('div');
     el.style.cssText = `
@@ -515,14 +424,12 @@
     .onfinish = () => el.remove();
   }
 
-  /* [09] ripple n개 연속 발생 */
   function multiRipple(color, n) {
     for (let i = 0; i < n; i++) {
       setTimeout(() => ripple(color), i * 160);
     }
   }
 
-  /* [10] 픽셀 노이즈 — 랜덤 색상 사각형이 깜빡임 */
   function pixelNoise(count) {
     for (let i = 0; i < count; i++) {
       const el = document.createElement('div');
@@ -546,7 +453,6 @@
     }
   }
 
-  /* [11] 화면 색상 반전 플래시 */
   function flashInvert() {
     const el = document.createElement('div');
     el.style.cssText = `
@@ -565,7 +471,6 @@
     .onfinish = () => el.remove();
   }
 
-  /* [12] 화면을 가로지르는 X자 선 2개 */
   function crossLines(color) {
     [45, -45].forEach(deg => {
       const el = document.createElement('div');
@@ -592,7 +497,6 @@
     });
   }
 
-  /* [13] 화면 중앙에서 사방으로 파티클 폭발 */
   function burstParticles(n, color) {
     const cx = vw() / 2;
     const cy = vh() / 2;
@@ -621,7 +525,6 @@
     }
   }
 
-  /* [14] 보이지 않는 격자가 화면 전체로 확장 */
   function gridExpand(color) {
     for (let r = 0; r < 5; r++) {
       for (let c = 0; c < 7; c++) {
@@ -648,7 +551,6 @@
     }
   }
 
-  /* [15] 공이 중력에 의해 바운스 */
   function bounceBall(color) {
     const el = document.createElement('div');
     const size = 36;
@@ -675,7 +577,6 @@
     .onfinish = () => el.remove();
   }
 
-  /* [16] 화면 중앙 숫자 카운트다운 from → 0 */
   function countdown(from) {
     let n = from;
     const show = () => {
@@ -707,7 +608,6 @@
     show();
   }
 
-  /* [17] 지그재그 줄무늬가 화면을 가로질러 이동 */
   function zigzag(color) {
     const el = document.createElement('div');
     el.style.cssText = `
@@ -735,7 +635,6 @@
     .onfinish = () => el.remove();
   }
 
-  /* [18] 무지개 색상 웨이브 — 6가지 색이 순서대로 덮음 */
   function rainbowWave() {
     const colors = ['#E24B4A', '#EF9F27', '#639922', '#378ADD', '#534AB7', '#D4537E'];
     colors.forEach((c, i) => {
@@ -760,7 +659,6 @@
     });
   }
 
-  /* [19] 점들이 화면 전체에서 중앙으로 흡입 */
   function suckIn(n, color) {
     for (let i = 0; i < n; i++) {
       const el = document.createElement('div');
@@ -790,7 +688,6 @@
     }
   }
 
-  /* [20] 랜덤 위치에서 점들이 깜빡임 */
   function blinkDots(n, color) {
     for (let i = 0; i < n; i++) {
       const el = document.createElement('div');
@@ -814,7 +711,6 @@
     }
   }
 
-  /* [21] 화면 전체가 좌우로 흔들리는 shake 효과 */
   function shakePage() {
     document.body.animate([
       { transform: 'translateX(0)' },
@@ -827,7 +723,6 @@
     ], { duration: 400, easing: 'linear' });
   }
 
-  /* [23] 공이 좌상단→우하단→좌하단 경로로 이동 */
   function cornerBall(color) {
     const el = document.createElement('div');
     const s  = 32;
@@ -852,7 +747,6 @@
     .onfinish = () => el.remove();
   }
 
-  /* [24] 화면이 특정 색으로 잠깐 물드는 플래시 */
   function colorFlash(color) {
     const el = document.createElement('div');
     el.style.cssText = `
@@ -872,7 +766,6 @@
     .onfinish = () => el.remove();
   }
 
-  /* [25] 공들이 화면 중앙을 중심으로 공전 후 사라짐 */
   function orbit(n, color) {
     const cx    = vw() / 2;
     const cy    = vh() / 2;
