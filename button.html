@@ -1,0 +1,924 @@
+{\rtf1\ansi\ansicpg949\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="ko">\
+<head>\
+  <meta charset="UTF-8" />\
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />\
+  <title>Button Archive</title>\
+  <style>\
+    /* \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+       \uc0\u51204 \u50669  \u47532 \u49483  & \u44592 \u48376  \u49444 \u51221 \
+       \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552  */\
+    *, *::before, *::after \{\
+      box-sizing: border-box;\
+      margin: 0;\
+      padding: 0;\
+    \}\
+\
+    :root \{\
+      --bg: #f5f5f5;\
+      --surface: #ffffff;\
+      --border: rgba(0, 0, 0, 0.12);\
+      --border-hover: rgba(0, 0, 0, 0.25);\
+      --text-primary: #111111;\
+      --text-secondary: #666666;\
+      --text-hint: #aaaaaa;\
+      --radius-md: 8px;\
+      --radius-lg: 12px;\
+      --gap: 10px;\
+    \}\
+\
+    /* \uc0\u45796 \u53356 \u47784 \u46300  \u45824 \u51025  */\
+    @media (prefers-color-scheme: dark) \{\
+      :root \{\
+        --bg: #1a1a1a;\
+        --surface: #242424;\
+        --border: rgba(255, 255, 255, 0.12);\
+        --border-hover: rgba(255, 255, 255, 0.28);\
+        --text-primary: #f0f0f0;\
+        --text-secondary: #999999;\
+        --text-hint: #555555;\
+      \}\
+    \}\
+\
+    body \{\
+      background: var(--bg);\
+      color: var(--text-primary);\
+      font-family: 'Helvetica Neue', Arial, sans-serif;\
+      min-height: 100vh;\
+      padding: 32px 24px 48px;\
+    \}\
+\
+    /* \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+       \uc0\u54756 \u45908 \
+       \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552  */\
+    .header \{\
+      text-align: center;\
+      margin-bottom: 32px;\
+    \}\
+\
+    .header h1 \{\
+      font-size: 28px;\
+      font-weight: 500;\
+      letter-spacing: -0.02em;\
+      margin-bottom: 6px;\
+    \}\
+\
+    .header p \{\
+      font-size: 14px;\
+      color: var(--text-secondary);\
+    \}\
+\
+    /* \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+       \uc0\u48260 \u53948  \u44536 \u47532 \u46300 \
+       5\uc0\u50676  \'d7 5\u54665  = 25\u44060 \
+       \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552  */\
+    .grid \{\
+      display: grid;\
+      grid-template-columns: repeat(5, 1fr);\
+      gap: var(--gap);\
+      max-width: 800px;\
+      margin: 0 auto;\
+    \}\
+\
+    /* \uc0\u48152 \u51025 \u54805 : \u54868 \u47732  \u51329 \u51012  \u46412  \u50676  \u49688  \u51460 \u51060 \u44592  */\
+    @media (max-width: 600px) \{\
+      .grid \{ grid-template-columns: repeat(3, 1fr); \}\
+    \}\
+\
+    @media (max-width: 380px) \{\
+      .grid \{ grid-template-columns: repeat(2, 1fr); \}\
+    \}\
+\
+    /* \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+       \uc0\u44060 \u48324  \u48260 \u53948  \u49472 \
+       \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552  */\
+    .btn-cell \{\
+      aspect-ratio: 1;\
+      background: var(--surface);\
+      border: 0.5px solid var(--border);\
+      border-radius: var(--radius-md);\
+      display: flex;\
+      flex-direction: column;\
+      align-items: center;\
+      justify-content: center;\
+      gap: 7px;\
+      cursor: pointer;\
+      transition: background 0.15s, border-color 0.15s, transform 0.1s;\
+      overflow: hidden;\
+      position: relative;\
+      user-select: none;\
+    \}\
+\
+    .btn-cell:hover \{\
+      background: rgba(0, 0, 0, 0.04);\
+      border-color: var(--border-hover);\
+    \}\
+\
+    @media (prefers-color-scheme: dark) \{\
+      .btn-cell:hover \{ background: rgba(255, 255, 255, 0.05); \}\
+    \}\
+\
+    .btn-cell:active \{\
+      transform: scale(0.95);\
+    \}\
+\
+    /* \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+       \uc0\u48260 \u53948  \u45236  \u51060 \u48120 \u51648  \u50689 \u50669 \
+       \uc0\u52628 \u54980  \u49688 \u51221 : .btn-img > img \u52628 \u44032 , .img-placeholder \u51228 \u44144 \
+       \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552  */\
+    .btn-img \{\
+      width: 60%;\
+      aspect-ratio: 2 / 1;\
+      border-radius: 4px;\
+      overflow: hidden;\
+      display: flex;\
+      align-items: center;\
+      justify-content: center;\
+    \}\
+\
+    /* \uc0\u45908 \u48120  \u54540 \u47112 \u51060 \u49828 \u54848 \u45908  \'97 \u52628 \u54980  \u49325 \u51228  */\
+    .img-placeholder \{\
+      width: 100%;\
+      height: 100%;\
+      background: var(--border);\
+      display: flex;\
+      align-items: center;\
+      justify-content: center;\
+      font-size: 9px;\
+      font-family: monospace;\
+      color: var(--text-hint);\
+      letter-spacing: 0.05em;\
+    \}\
+\
+    /* \uc0\u49892 \u51228  \u51060 \u48120 \u51648  \u53468 \u44536  \'97 \u52628 \u54980  \u54876 \u49457 \u54868 \
+    .btn-img img \{\
+      width: 100%;\
+      height: 100%;\
+      object-fit: contain;\
+    \}\
+    */\
+\
+    /* \uc0\u48260 \u53948  \u46972 \u48296  */\
+    .btn-label \{\
+      font-size: 10px;\
+      font-family: monospace;\
+      color: var(--text-secondary);\
+      letter-spacing: 0.04em;\
+    \}\
+\
+    /* \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+       \uc0\u51064 \u53552 \u47001 \u49496  \u50724 \u48260 \u47112 \u51060  \u52968 \u53580 \u51060 \u45320 \
+       fixed\uc0\u47196  \u51204 \u52404  \u54868 \u47732  \u45934 \u51020  / pointer-events:none\
+       \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552  */\
+    #overlay \{\
+      position: fixed;\
+      inset: 0;\
+      pointer-events: none;\
+      z-index: 9999;\
+      overflow: hidden;\
+    \}\
+  </style>\
+</head>\
+<body>\
+\
+  <!-- \uc0\u54756 \u45908  -->\
+  <header class="header">\
+    <h1>button archive</h1>\
+    <p>\uc0\u48260 \u53948 \u51012  \u53364 \u47533 \u54616 \u47732  \u51064 \u53552 \u47001 \u49496 \u51060  \u49892 \u54665 \u46121 \u45768 \u45796 </p>\
+  </header>\
+\
+  <!-- \uc0\u48260 \u53948  \u44536 \u47532 \u46300  \'97 JS\u47196  \u47116 \u45908 \u47553  -->\
+  <div class="grid" id="grid"></div>\
+\
+  <!-- \uc0\u51064 \u53552 \u47001 \u49496  \u54028 \u54000 \u53364  \u46321 \u51060  \u49373 \u49457 \u46104 \u45716  \u50724 \u48260 \u47112 \u51060  -->\
+  <div id="overlay"></div>\
+\
+\
+  <script>\
+  /* \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+     \uc0\u48260 \u53948  \u45936 \u51060 \u53552 \
+     \uc0\u52628 \u54980  \u49688 \u51221 :\
+       - name: \uc0\u48260 \u53948  \u54364 \u49884  \u51060 \u47492  \u48320 \u44221 \
+       - img:  \uc0\u51060 \u48120 \u51648  \u44221 \u47196  \u52628 \u44032  (\u52628 \u54980 )\
+     \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552  */\
+  const BUTTONS = [\
+    \{ id: 1,  name: 'BTN-01' \}, // \uc0\u48260 \u53948  01 \'97 \u52628 \u54980  \u51060 \u47492 /\u51060 \u48120 \u51648  \u44368 \u52404 \
+    \{ id: 2,  name: 'BTN-02' \}, // \uc0\u48260 \u53948  02\
+    \{ id: 3,  name: 'BTN-03' \}, // \uc0\u48260 \u53948  03\
+    \{ id: 4,  name: 'BTN-04' \}, // \uc0\u48260 \u53948  04\
+    \{ id: 5,  name: 'BTN-05' \}, // \uc0\u48260 \u53948  05\
+    \{ id: 6,  name: 'BTN-06' \}, // \uc0\u48260 \u53948  06\
+    \{ id: 7,  name: 'BTN-07' \}, // \uc0\u48260 \u53948  07\
+    \{ id: 8,  name: 'BTN-08' \}, // \uc0\u48260 \u53948  08\
+    \{ id: 9,  name: 'BTN-09' \}, // \uc0\u48260 \u53948  09\
+    \{ id: 10, name: 'BTN-10' \}, // \uc0\u48260 \u53948  10\
+    \{ id: 11, name: 'BTN-11' \}, // \uc0\u48260 \u53948  11\
+    \{ id: 12, name: 'BTN-12' \}, // \uc0\u48260 \u53948  12\
+    \{ id: 13, name: 'BTN-13' \}, // \uc0\u48260 \u53948  13\
+    \{ id: 14, name: 'BTN-14' \}, // \uc0\u48260 \u53948  14\
+    \{ id: 15, name: 'BTN-15' \}, // \uc0\u48260 \u53948  15\
+    \{ id: 16, name: 'BTN-16' \}, // \uc0\u48260 \u53948  16\
+    \{ id: 17, name: 'BTN-17' \}, // \uc0\u48260 \u53948  17\
+    \{ id: 18, name: 'BTN-18' \}, // \uc0\u48260 \u53948  18\
+    \{ id: 19, name: 'BTN-19' \}, // \uc0\u48260 \u53948  19\
+    \{ id: 20, name: 'BTN-20' \}, // \uc0\u48260 \u53948  20\
+    \{ id: 21, name: 'BTN-21' \}, // \uc0\u48260 \u53948  21\
+    \{ id: 22, name: 'BTN-22' \}, // \uc0\u48260 \u53948  22\
+    \{ id: 23, name: 'BTN-23' \}, // \uc0\u48260 \u53948  23\
+    \{ id: 24, name: 'BTN-24' \}, // \uc0\u48260 \u53948  24\
+    \{ id: 25, name: 'BTN-25' \}, // \uc0\u48260 \u53948  25\
+  ];\
+\
+\
+  /* \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+     \uc0\u51064 \u53552 \u47001 \u49496  \u47605 \
+     \uc0\u52628 \u54980  \u49688 \u51221 :\
+       \uc0\u44033  \u48264 \u54840 \u51032  \u54632 \u49688  \u45236 \u50857 \u51012  \u48260 \u53948 \u50640  \u47582 \u44172  \u44368 \u52404 \
+       ex) 1: () => myCustomInteraction(),\
+     \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552  */\
+  const INTERACTIONS = \{\
+\
+    // 01 \'97 \uc0\u54028 \u46976  \u44277 \u46308 \u51060  \u50948 \u50640 \u49436  \u50500 \u47000 \u47196  \u45209 \u54616 \
+    1: () => spawnCircles(20, '#378ADD', 'fall'),\
+\
+    // 02 \'97 \uc0\u48744 \u44036  \u44277 \u46308 \u51060  \u51473 \u50521 \u50640 \u49436  \u54253 \u48156 \
+    2: () => spawnCircles(30, '#E24B4A', 'explode'),\
+\
+    // 03 \'97 "click!" \uc0\u53581 \u49828 \u53944 \u44032  \u50948 \u47196  \u45216 \u50500 \u44048 \
+    3: () => flyText('click!', '#534AB7', 18),\
+\
+    // 04 \'97 \uc0\u45433 \u49353  \u48324 \u46308 \u51060  \u54868 \u47732 \u50640  \u55145 \u49100 \u47140 \u51664 \
+    4: () => spawnStars(25, '#639922'),\
+\
+    // 05 \'97 \uc0\u52397 \u47197 \u49353  \u49688 \u54217  \u49828 \u52884 \u49440 \u51060  \u50500 \u47000 \u47196  \u51060 \u46041 \
+    5: () => scanLine('horizontal', '#1D9E75'),\
+\
+    // 06 \'97 \uc0\u54609 \u53356  \u49688 \u51649  \u49828 \u52884 \u49440 \u51060  \u50724 \u47480 \u51901 \u51004 \u47196  \u51060 \u46041 \
+    6: () => scanLine('vertical', '#D4537E'),\
+\
+    // 07 \'97 \uc0\u51452 \u54889  \u50508 \u54028 \u48307  \u44544 \u51088  \u48708 \
+    7: () => letterRain('ABCDEFGHIJK', '#BA7517'),\
+\
+    // 08 \'97 \uc0\u50724 \u47116 \u51648  \u45800 \u51068  ripple \u54028 \u47928 \
+    8: () => ripple('#EF9F27'),\
+\
+    // 09 \'97 \uc0\u54028 \u46976  ripple 5\u44060  \u50672 \u49549  \u48156 \u49373 \
+    9: () => multiRipple('#185FA5', 5),\
+\
+    // 10 \'97 \uc0\u47004 \u45924  \u49353 \u49345  \u54589 \u49472  \u45432 \u51060 \u51592  \u44636 \u48737 \u51076 \
+    10: () => pixelNoise(80),\
+\
+    // 11 \'97 \uc0\u54868 \u47732  \u48152 \u51204 (invert) \u54540 \u47000 \u49884 \
+    11: () => flashInvert(),\
+\
+    // 12 \'97 \uc0\u48744 \u44036  X\u51088  \u49440 \u51060  \u54868 \u47732 \u51012  \u44032 \u47196 \u51648 \u47492 \
+    12: () => crossLines('#E24B4A'),\
+\
+    // 13 \'97 \uc0\u54868 \u47732  \u51473 \u50521 \u50640 \u49436  \u54609 \u53356  \u54028 \u54000 \u53364  \u54253 \u48156 \
+    13: () => burstParticles(40, '#D4537E'),\
+\
+    // 14 \'97 \uc0\u48372 \u46972 \u49353  \u44201 \u51088 \u44032  \u54868 \u47732  \u51204 \u52404 \u47196  \u54869 \u51109 \
+    14: () => gridExpand('#534AB7'),\
+\
+    // 15 \'97 \uc0\u52488 \u47197  \u44277 \u51060  \u51473 \u47141  \u48155 \u50500  \u48148 \u50868 \u49828 \
+    15: () => bounceBall('#1D9E75'),\
+\
+    // 16 \'97 \uc0\u54868 \u47732  \u51473 \u50521 \u50640  \u49707 \u51088  \u52852 \u50868 \u53944 \u45796 \u50868  5\u8594 0\
+    16: () => countdown(5),\
+\
+    // 17 \'97 \uc0\u51452 \u54889  \u51648 \u44536 \u51116 \u44536  \u51460 \u47924 \u45740 \u44032  \u50694 \u51004 \u47196  \u51060 \u46041 \
+    17: () => zigzag('#BA7517'),\
+\
+    // 18 \'97 \uc0\u47924 \u51648 \u44060  \u49353 \u49345 \u51060  \u49692 \u49436 \u45824 \u47196  \u54868 \u47732 \u51012  \u45934 \u51020 \
+    18: () => rainbowWave(),\
+\
+    // 19 \'97 \uc0\u54028 \u46976  \u51216 \u46308 \u51060  \u54868 \u47732  \u51473 \u50521 \u51004 \u47196  \u55137 \u51077 \
+    19: () => suckIn(30, '#378ADD'),\
+\
+    // 20 \'97 \uc0\u51452 \u54889  \u51216 \u46308 \u51060  \u47004 \u45924  \u50948 \u52824 \u50640 \u49436  \u44636 \u48737 \u51076 \
+    20: () => blinkDots(15, '#D85A30'),\
+\
+    // 21 \'97 \uc0\u54868 \u47732  \u51204 \u52404 \u44032  \u51340 \u50864 \u47196  \u55124 \u46308 \u47548  (shake)\
+    21: () => shakePage(),\
+\
+    // 22 \'97 \uc0\u44032 \u50948 \u48148 \u50948 \u48372  \u51060 \u47784 \u51648  \u47004 \u45924 \u51004 \u47196  \u45216 \u50500 \u50724 \u47492 \
+    22: () => flyText(['\uc0\u9994 ', '\u9996 \u65039 ', '\u55357 \u56720 \u65039 '][Math.floor(Math.random() * 3)], '#534AB7', 64),\
+\
+    // 23 \'97 \uc0\u52488 \u47197  \u44277 \u51060  \u51340 \u49345 \u45800 \u8594 \u50864 \u54616 \u45800 \u8594 \u51340 \u54616 \u45800  \u51060 \u46041 \
+    23: () => cornerBall('#1D9E75'),\
+\
+    // 24 \'97 \uc0\u54868 \u47732 \u51060  \u50672 \u48372 \u46972 \u49353 \u51004 \u47196  \u51104 \u44624  \u54540 \u47000 \u49884 \
+    24: () => colorFlash('rgba(83,74,183,0.18)'),\
+\
+    // 25 \'97 \uc0\u48372 \u46972  \u44277 \u46308 \u51060  \u54868 \u47732  \u51473 \u50521 \u51012  \u51473 \u49900 \u51004 \u47196  \u44277 \u51204 \
+    25: () => orbit(8, '#534AB7'),\
+  \};\
+\
+\
+  /* \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+     \uc0\u44536 \u47532 \u46300  \u47116 \u45908 \u47553 \
+     \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552  */\
+  const grid    = document.getElementById('grid');\
+  const overlay = document.getElementById('overlay');\
+\
+  BUTTONS.forEach(btn => \{\
+    const cell = document.createElement('div');\
+    cell.className = 'btn-cell';\
+\
+    /* \uc0\u52628 \u54980  \u51060 \u48120 \u51648  \u44368 \u52404  \u48169 \u48277 :\
+       1. BUTTONS \uc0\u48176 \u50676 \u50640  img \u44221 \u47196  \u52628 \u44032 : \{ id:1, name:'BTN-01', img:'./images/btn01.png' \}\
+       2. \uc0\u50500 \u47000  imgHTML\u51012  \u45796 \u51020 \u51004 \u47196  \u44368 \u52404 :\
+          const imgHTML = btn.img\
+            ? `<img src="$\{btn.img\}" alt="$\{btn.name\}" />`\
+            : `<div class="img-placeholder">IMG</div>`;\
+    */\
+    const imgHTML = `<div class="img-placeholder">IMG</div>`;\
+\
+    cell.innerHTML = `\
+      <div class="btn-img">$\{imgHTML\}</div>\
+      <span class="btn-label">$\{btn.name\}</span>\
+    `;\
+\
+    cell.addEventListener('click', () => \{\
+      if (INTERACTIONS[btn.id]) INTERACTIONS[btn.id]();\
+    \});\
+\
+    grid.appendChild(cell);\
+  \});\
+\
+\
+  /* \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+     \uc0\u50976 \u54008 \u47532 \u54000  \u54632 \u49688 \
+     \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552  */\
+  const vw   = () => window.innerWidth;\
+  const vh   = () => window.innerHeight;\
+  const rand = (a, b) => Math.random() * (b - a) + a;\
+\
+\
+  /* \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+     \uc0\u51064 \u53552 \u47001 \u49496  \u54632 \u49688  25\u44060 \
+     \uc0\u52628 \u54980  \u49688 \u51221 : \u44033  \u54632 \u49688  \u45236 \u50857 \u51012  \u48260 \u53948  \u53945 \u49457 \u50640  \u47582 \u44172  \u44368 \u52404 \
+     \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552  */\
+\
+  /* [01][02] \uc0\u50896 \u54805  \u54028 \u54000 \u53364  \'97 \u45209 \u54616  or \u54253 \u48156 \
+     mode: 'fall' | 'explode' */\
+  function spawnCircles(count, color, mode) \{\
+    for (let i = 0; i < count; i++) \{\
+      const el = document.createElement('div');\
+      const size = rand(10, 30);\
+      el.style.cssText = `\
+        position: fixed;\
+        width: $\{size\}px;\
+        height: $\{size\}px;\
+        border-radius: 50%;\
+        background: $\{color\};\
+        opacity: 0.85;\
+        pointer-events: none;\
+        left: $\{rand(0, 100)\}vw;\
+        top: -$\{size\}px;\
+      `;\
+      overlay.appendChild(el);\
+\
+      const tx = mode === 'explode' ? rand(-200, 200) : rand(-40, 40);\
+      const ty = mode === 'explode' ? rand(-200, 200) : vh() + size + 20;\
+\
+      el.animate([\
+        \{ transform: 'translate(0,0)', opacity: 0.85 \},\
+        \{ transform: `translate($\{tx\}px, $\{ty\}px)`, opacity: 0 \}\
+      ], \{\
+        duration: rand(600, 1400),\
+        delay: rand(0, 400),\
+        easing: 'cubic-bezier(.2,.8,.4,1)',\
+        fill: 'forwards'\
+      \}).onfinish = () => el.remove();\
+    \}\
+  \}\
+\
+  /* [03][22] \uc0\u53581 \u49828 \u53944 \u44032  \u50948 \u47196  \u45216 \u50500 \u44032 \u45716  \u54952 \u44284  */\
+  function flyText(txt, color, size) \{\
+    const el = document.createElement('div');\
+    el.textContent = txt;\
+    el.style.cssText = `\
+      position: fixed;\
+      font-size: $\{size || 18\}px;\
+      font-weight: 500;\
+      color: $\{color\};\
+      pointer-events: none;\
+      left: $\{rand(15, 75)\}vw;\
+      top: $\{rand(20, 65)\}vh;\
+      white-space: nowrap;\
+      z-index: 10000;\
+    `;\
+    overlay.appendChild(el);\
+\
+    el.animate([\
+      \{ transform: 'translateY(0) scale(1)', opacity: 1 \},\
+      \{ transform: 'translateY(-80px) scale(1.4)', opacity: 0 \}\
+    ], \{ duration: 900, easing: 'ease-out', fill: 'forwards' \})\
+    .onfinish = () => el.remove();\
+  \}\
+\
+  /* [04] \uc0\u48324 \u9733  \u54028 \u54000 \u53364  */\
+  function spawnStars(count, color) \{\
+    for (let i = 0; i < count; i++) \{\
+      const el = document.createElement('div');\
+      el.textContent = '\uc0\u9733 ';\
+      el.style.cssText = `\
+        position: fixed;\
+        font-size: $\{rand(14, 32)\}px;\
+        color: $\{color\};\
+        left: $\{rand(0, 100)\}vw;\
+        top: $\{rand(0, 100)\}vh;\
+        pointer-events: none;\
+        opacity: 0.9;\
+      `;\
+      overlay.appendChild(el);\
+\
+      el.animate([\
+        \{ transform: `rotate(0deg) scale(0)`, opacity: 0.9 \},\
+        \{ transform: `rotate($\{rand(-360, 360)\}deg) scale(1)`, opacity: 0, offset: 0.7 \},\
+        \{ opacity: 0 \}\
+      ], \{ duration: rand(800, 1600), delay: rand(0, 600), fill: 'forwards' \})\
+      .onfinish = () => el.remove();\
+    \}\
+  \}\
+\
+  /* [05][06] \uc0\u49828 \u52884 \u49440  \'97 \u49688 \u54217  or \u49688 \u51649 \
+     dir: 'horizontal' | 'vertical' */\
+  function scanLine(dir, color) \{\
+    const el = document.createElement('div');\
+    const isH = dir === 'horizontal';\
+    el.style.cssText = `\
+      position: fixed;\
+      background: $\{color\};\
+      opacity: 0.6;\
+      pointer-events: none;\
+      $\{isH\
+        ? `width: 100vw; height: 3px; top: 0; left: 0;`\
+        : `height: 100vh; width: 3px; top: 0; left: 0;`\
+      \}\
+    `;\
+    overlay.appendChild(el);\
+\
+    el.animate([\
+      \{ transform: isH ? 'translateY(-3px)' : 'translateX(-3px)' \},\
+      \{ transform: isH ? `translateY($\{vh()\}px)` : `translateX($\{vw()\}px)` \}\
+    ], \{ duration: 600, easing: 'linear', fill: 'forwards' \})\
+    .onfinish = () => el.remove();\
+  \}\
+\
+  /* [07] \uc0\u44544 \u51088  \u48708  \'97 \u47928 \u51088 \u50676 \u50640 \u49436  \u47004 \u45924  \u49440 \u53469 \u54644  \u45209 \u54616  */\
+  function letterRain(chars, color) \{\
+    for (let i = 0; i < 18; i++) \{\
+      const el = document.createElement('div');\
+      el.textContent = chars[Math.floor(rand(0, chars.length))];\
+      el.style.cssText = `\
+        position: fixed;\
+        font-family: monospace;\
+        font-size: $\{rand(12, 28)\}px;\
+        color: $\{color\};\
+        left: $\{rand(0, 100)\}vw;\
+        top: -30px;\
+        pointer-events: none;\
+      `;\
+      overlay.appendChild(el);\
+\
+      el.animate([\
+        \{ transform: 'translateY(0)', opacity: 0.9 \},\
+        \{ transform: `translateY($\{vh() + 40\}px)`, opacity: 0.1 \}\
+      ], \{ duration: rand(700, 1400), delay: rand(0, 500), easing: 'linear', fill: 'forwards' \})\
+      .onfinish = () => el.remove();\
+    \}\
+  \}\
+\
+  /* [08] \uc0\u54868 \u47732  \u51473 \u50521 \u50640 \u49436  \u48148 \u44645 \u51004 \u47196  \u54140 \u51648 \u45716  ripple */\
+  function ripple(color) \{\
+    const el = document.createElement('div');\
+    el.style.cssText = `\
+      position: fixed;\
+      border: 3px solid $\{color\};\
+      border-radius: 50%;\
+      width: 0;\
+      height: 0;\
+      top: 50%;\
+      left: 50%;\
+      pointer-events: none;\
+      opacity: 0.9;\
+    `;\
+    overlay.appendChild(el);\
+\
+    el.animate([\
+      \{ width: '0px', height: '0px', marginLeft: '0px', marginTop: '0px', opacity: 0.9 \},\
+      \{ width: '200vmax', height: '200vmax', marginLeft: '-100vmax', marginTop: '-100vmax', opacity: 0 \}\
+    ], \{ duration: 900, easing: 'ease-out', fill: 'forwards' \})\
+    .onfinish = () => el.remove();\
+  \}\
+\
+  /* [09] ripple n\uc0\u44060  \u50672 \u49549  \u48156 \u49373  */\
+  function multiRipple(color, n) \{\
+    for (let i = 0; i < n; i++) \{\
+      setTimeout(() => ripple(color), i * 160);\
+    \}\
+  \}\
+\
+  /* [10] \uc0\u54589 \u49472  \u45432 \u51060 \u51592  \'97 \u47004 \u45924  \u49353 \u49345  \u49324 \u44033 \u54805 \u51060  \u44636 \u48737 \u51076  */\
+  function pixelNoise(count) \{\
+    for (let i = 0; i < count; i++) \{\
+      const el = document.createElement('div');\
+      const s = rand(4, 16);\
+      el.style.cssText = `\
+        position: fixed;\
+        width: $\{s\}px;\
+        height: $\{s\}px;\
+        background: hsl($\{rand(0, 360)\}, 70%, 55%);\
+        left: $\{rand(0, 100)\}vw;\
+        top: $\{rand(0, 100)\}vh;\
+        pointer-events: none;\
+      `;\
+      overlay.appendChild(el);\
+\
+      el.animate([\
+        \{ opacity: rand(0.3, 1) \},\
+        \{ opacity: 0 \}\
+      ], \{ duration: rand(200, 600), delay: rand(0, 300), fill: 'forwards' \})\
+      .onfinish = () => el.remove();\
+    \}\
+  \}\
+\
+  /* [11] \uc0\u54868 \u47732  \u49353 \u49345  \u48152 \u51204  \u54540 \u47000 \u49884  */\
+  function flashInvert() \{\
+    const el = document.createElement('div');\
+    el.style.cssText = `\
+      position: fixed;\
+      inset: 0;\
+      mix-blend-mode: difference;\
+      background: white;\
+      pointer-events: none;\
+    `;\
+    overlay.appendChild(el);\
+\
+    el.animate([\
+      \{ opacity: 1 \},\
+      \{ opacity: 0 \}\
+    ], \{ duration: 300, fill: 'forwards' \})\
+    .onfinish = () => el.remove();\
+  \}\
+\
+  /* [12] \uc0\u54868 \u47732 \u51012  \u44032 \u47196 \u51648 \u47476 \u45716  X\u51088  \u49440  2\u44060  */\
+  function crossLines(color) \{\
+    [45, -45].forEach(deg => \{\
+      const el = document.createElement('div');\
+      el.style.cssText = `\
+        position: fixed;\
+        height: 2px;\
+        background: $\{color\};\
+        width: 141vw;\
+        top: 50%;\
+        left: 50%;\
+        transform-origin: center;\
+        transform: translate(-50%, -50%) rotate($\{deg\}deg);\
+        pointer-events: none;\
+        opacity: 0.9;\
+      `;\
+      overlay.appendChild(el);\
+\
+      el.animate([\
+        \{ scaleX: 0, opacity: 0.9 \},\
+        \{ scaleX: 1, opacity: 0, offset: 0.7 \},\
+        \{ opacity: 0 \}\
+      ], \{ duration: 700, easing: 'ease-in-out', fill: 'forwards' \})\
+      .onfinish = () => el.remove();\
+    \});\
+  \}\
+\
+  /* [13] \uc0\u54868 \u47732  \u51473 \u50521 \u50640 \u49436  \u49324 \u48169 \u51004 \u47196  \u54028 \u54000 \u53364  \u54253 \u48156  */\
+  function burstParticles(n, color) \{\
+    const cx = vw() / 2;\
+    const cy = vh() / 2;\
+    for (let i = 0; i < n; i++) \{\
+      const el = document.createElement('div');\
+      const size = rand(4, 14);\
+      el.style.cssText = `\
+        position: fixed;\
+        width: $\{size\}px;\
+        height: $\{size\}px;\
+        border-radius: 50%;\
+        background: $\{color\};\
+        left: $\{cx\}px;\
+        top: $\{cy\}px;\
+        pointer-events: none;\
+      `;\
+      overlay.appendChild(el);\
+\
+      const angle = rand(0, Math.PI * 2);\
+      const dist  = rand(80, 280);\
+      el.animate([\
+        \{ transform: 'translate(-50%,-50%) scale(1)', opacity: 0.9 \},\
+        \{ transform: `translate(calc(-50% + $\{Math.cos(angle) * dist\}px), calc(-50% + $\{Math.sin(angle) * dist\}px)) scale(0)`, opacity: 0 \}\
+      ], \{ duration: rand(600, 1100), easing: 'ease-out', fill: 'forwards' \})\
+      .onfinish = () => el.remove();\
+    \}\
+  \}\
+\
+  /* [14] \uc0\u48372 \u51060 \u51648  \u50506 \u45716  \u44201 \u51088 \u44032  \u54868 \u47732  \u51204 \u52404 \u47196  \u54869 \u51109  */\
+  function gridExpand(color) \{\
+    for (let r = 0; r < 5; r++) \{\
+      for (let c = 0; c < 7; c++) \{\
+        const el = document.createElement('div');\
+        el.style.cssText = `\
+          position: fixed;\
+          width: 140px;\
+          height: 140px;\
+          border: 1.5px solid $\{color\};\
+          pointer-events: none;\
+          left: $\{c * 140\}px;\
+          top: $\{r * 140\}px;\
+          opacity: 0;\
+        `;\
+        overlay.appendChild(el);\
+\
+        el.animate([\
+          \{ opacity: 0, transform: 'scale(0.5)' \},\
+          \{ opacity: 0.5, transform: 'scale(1)', offset: 0.5 \},\
+          \{ opacity: 0, transform: 'scale(1.2)' \}\
+        ], \{ duration: 900, delay: (r + c) * 60, fill: 'forwards' \})\
+        .onfinish = () => el.remove();\
+      \}\
+    \}\
+  \}\
+\
+  /* [15] \uc0\u44277 \u51060  \u51473 \u47141 \u50640  \u51032 \u54644  \u48148 \u50868 \u49828  */\
+  function bounceBall(color) \{\
+    const el = document.createElement('div');\
+    const size = 36;\
+    el.style.cssText = `\
+      position: fixed;\
+      width: $\{size\}px;\
+      height: $\{size\}px;\
+      border-radius: 50%;\
+      background: $\{color\};\
+      left: $\{rand(10, 80)\}vw;\
+      top: 0;\
+      pointer-events: none;\
+    `;\
+    overlay.appendChild(el);\
+\
+    el.animate([\
+      \{ top: '0px',                     easing: 'ease-in'  \},\
+      \{ top: `$\{vh() - size\}px`,        easing: 'ease-out', offset: 0.4 \},\
+      \{ top: `$\{vh() - size * 4\}px`,    easing: 'ease-in',  offset: 0.6 \},\
+      \{ top: `$\{vh() - size\}px`,        easing: 'ease-out', offset: 0.8 \},\
+      \{ top: `$\{vh() - size * 2\}px`,                        offset: 0.9 \},\
+      \{ top: `$\{vh() - size\}px`,        opacity: 0 \}\
+    ], \{ duration: 1400, fill: 'forwards' \})\
+    .onfinish = () => el.remove();\
+  \}\
+\
+  /* [16] \uc0\u54868 \u47732  \u51473 \u50521  \u49707 \u51088  \u52852 \u50868 \u53944 \u45796 \u50868  from \u8594  0 */\
+  function countdown(from) \{\
+    let n = from;\
+    const show = () => \{\
+      const el = document.createElement('div');\
+      el.textContent = n;\
+      el.style.cssText = `\
+        position: fixed;\
+        font-size: 120px;\
+        font-weight: 500;\
+        color: var(--text-primary, #111);\
+        opacity: 0;\
+        top: 50%;\
+        left: 50%;\
+        transform: translate(-50%, -50%);\
+        pointer-events: none;\
+        font-family: monospace;\
+      `;\
+      overlay.appendChild(el);\
+\
+      el.animate([\
+        \{ opacity: 0.85, transform: 'translate(-50%,-50%) scale(1)' \},\
+        \{ opacity: 0,    transform: 'translate(-50%,-50%) scale(1.6)' \}\
+      ], \{ duration: 500, fill: 'forwards' \})\
+      .onfinish = () => \{\
+        el.remove();\
+        if (n > 0) \{ n--; show(); \}\
+      \};\
+    \};\
+    show();\
+  \}\
+\
+  /* [17] \uc0\u51648 \u44536 \u51116 \u44536  \u51460 \u47924 \u45740 \u44032  \u54868 \u47732 \u51012  \u44032 \u47196 \u51656 \u47084  \u51060 \u46041  */\
+  function zigzag(color) \{\
+    const el = document.createElement('div');\
+    el.style.cssText = `\
+      position: fixed;\
+      top: 0;\
+      left: -200px;\
+      pointer-events: none;\
+      width: 200px;\
+      height: 100vh;\
+      background: repeating-linear-gradient(\
+        -45deg,\
+        $\{color\},\
+        $\{color\} 10px,\
+        transparent 10px,\
+        transparent 20px\
+      );\
+      opacity: 0.5;\
+    `;\
+    overlay.appendChild(el);\
+\
+    el.animate([\
+      \{ transform: 'translateX(0)' \},\
+      \{ transform: `translateX($\{vw() + 200\}px)` \}\
+    ], \{ duration: 800, easing: 'linear', fill: 'forwards' \})\
+    .onfinish = () => el.remove();\
+  \}\
+\
+  /* [18] \uc0\u47924 \u51648 \u44060  \u49353 \u49345  \u50920 \u51060 \u48652  \'97 6\u44032 \u51648  \u49353 \u51060  \u49692 \u49436 \u45824 \u47196  \u45934 \u51020  */\
+  function rainbowWave() \{\
+    const colors = ['#E24B4A', '#EF9F27', '#639922', '#378ADD', '#534AB7', '#D4537E'];\
+    colors.forEach((c, i) => \{\
+      setTimeout(() => \{\
+        const el = document.createElement('div');\
+        el.style.cssText = `\
+          position: fixed;\
+          inset: 0;\
+          pointer-events: none;\
+          background: $\{c\};\
+          opacity: 0;\
+        `;\
+        overlay.appendChild(el);\
+\
+        el.animate([\
+          \{ opacity: 0 \},\
+          \{ opacity: 0.14 \},\
+          \{ opacity: 0 \}\
+        ], \{ duration: 300, fill: 'forwards' \})\
+        .onfinish = () => el.remove();\
+      \}, i * 120);\
+    \});\
+  \}\
+\
+  /* [19] \uc0\u51216 \u46308 \u51060  \u54868 \u47732  \u51204 \u52404 \u50640 \u49436  \u51473 \u50521 \u51004 \u47196  \u55137 \u51077  */\
+  function suckIn(n, color) \{\
+    for (let i = 0; i < n; i++) \{\
+      const el = document.createElement('div');\
+      const s  = rand(8, 22);\
+      const sx = rand(0, 100);\
+      const sy = rand(0, 100);\
+      el.style.cssText = `\
+        position: fixed;\
+        width: $\{s\}px;\
+        height: $\{s\}px;\
+        border-radius: 50%;\
+        background: $\{color\};\
+        left: $\{sx\}vw;\
+        top: $\{sy\}vh;\
+        pointer-events: none;\
+      `;\
+      overlay.appendChild(el);\
+\
+      const dx = vw() / 2 - (sx / 100 * vw());\
+      const dy = vh() / 2 - (sy / 100 * vh());\
+\
+      el.animate([\
+        \{ transform: 'translate(0,0) scale(1)', opacity: 0.8 \},\
+        \{ transform: `translate($\{dx\}px, $\{dy\}px) scale(0)`, opacity: 0 \}\
+      ], \{ duration: rand(500, 1000), easing: 'ease-in', fill: 'forwards' \})\
+      .onfinish = () => el.remove();\
+    \}\
+  \}\
+\
+  /* [20] \uc0\u47004 \u45924  \u50948 \u52824 \u50640 \u49436  \u51216 \u46308 \u51060  \u44636 \u48737 \u51076  */\
+  function blinkDots(n, color) \{\
+    for (let i = 0; i < n; i++) \{\
+      const el = document.createElement('div');\
+      const s  = rand(8, 24);\
+      el.style.cssText = `\
+        position: fixed;\
+        width: $\{s\}px;\
+        height: $\{s\}px;\
+        border-radius: 50%;\
+        background: $\{color\};\
+        left: $\{rand(0, 100)\}vw;\
+        top: $\{rand(0, 100)\}vh;\
+        pointer-events: none;\
+      `;\
+      overlay.appendChild(el);\
+\
+      el.animate([\
+        \{ opacity: 0 \}, \{ opacity: 1 \}, \{ opacity: 0 \}, \{ opacity: 1 \}, \{ opacity: 0 \}\
+      ], \{ duration: rand(400, 900), delay: rand(0, 600), fill: 'forwards' \})\
+      .onfinish = () => el.remove();\
+    \}\
+  \}\
+\
+  /* [21] \uc0\u54868 \u47732  \u51204 \u52404 \u44032  \u51340 \u50864 \u47196  \u55124 \u46308 \u47532 \u45716  shake \u54952 \u44284  */\
+  function shakePage() \{\
+    document.body.animate([\
+      \{ transform: 'translateX(0)' \},\
+      \{ transform: 'translateX(-8px)' \},\
+      \{ transform: 'translateX(8px)' \},\
+      \{ transform: 'translateX(-6px)' \},\
+      \{ transform: 'translateX(6px)' \},\
+      \{ transform: 'translateX(-3px)' \},\
+      \{ transform: 'translateX(0)' \}\
+    ], \{ duration: 400, easing: 'linear' \});\
+  \}\
+\
+  /* [23] \uc0\u44277 \u51060  \u51340 \u49345 \u45800 \u8594 \u50864 \u54616 \u45800 \u8594 \u51340 \u54616 \u45800  \u44221 \u47196 \u47196  \u51060 \u46041  */\
+  function cornerBall(color) \{\
+    const el = document.createElement('div');\
+    const s  = 32;\
+    el.style.cssText = `\
+      position: fixed;\
+      width: $\{s\}px;\
+      height: $\{s\}px;\
+      border-radius: 50%;\
+      background: $\{color\};\
+      pointer-events: none;\
+      opacity: 0.85;\
+      left: 0;\
+      top: 0;\
+    `;\
+    overlay.appendChild(el);\
+\
+    el.animate([\
+      \{ transform: 'translate(0, 0)' \},\
+      \{ transform: `translate($\{vw() - s\}px, $\{vh() - s\}px)`, offset: 0.5, easing: 'ease-in-out' \},\
+      \{ transform: `translate(0, $\{vh() - s\}px)` \}\
+    ], \{ duration: 900, easing: 'ease-in-out', fill: 'forwards' \})\
+    .onfinish = () => el.remove();\
+  \}\
+\
+  /* [24] \uc0\u54868 \u47732 \u51060  \u53945 \u51221  \u49353 \u51004 \u47196  \u51104 \u44624  \u47932 \u46300 \u45716  \u54540 \u47000 \u49884  */\
+  function colorFlash(color) \{\
+    const el = document.createElement('div');\
+    el.style.cssText = `\
+      position: fixed;\
+      inset: 0;\
+      background: $\{color\};\
+      pointer-events: none;\
+      opacity: 0;\
+    `;\
+    overlay.appendChild(el);\
+\
+    el.animate([\
+      \{ opacity: 0 \},\
+      \{ opacity: 1 \},\
+      \{ opacity: 0 \}\
+    ], \{ duration: 500, fill: 'forwards' \})\
+    .onfinish = () => el.remove();\
+  \}\
+\
+  /* [25] \uc0\u44277 \u46308 \u51060  \u54868 \u47732  \u51473 \u50521 \u51012  \u51473 \u49900 \u51004 \u47196  \u44277 \u51204  \u54980  \u49324 \u46972 \u51664  */\
+  function orbit(n, color) \{\
+    const cx    = vw() / 2;\
+    const cy    = vh() / 2;\
+    const start = Date.now();\
+    const dur   = 2000;\
+\
+    const dots = Array.from(\{ length: n \}, (_, i) => \{\
+      const el = document.createElement('div');\
+      el.style.cssText = `\
+        position: fixed;\
+        width: 14px;\
+        height: 14px;\
+        border-radius: 50%;\
+        background: $\{color\};\
+        pointer-events: none;\
+        opacity: 0.85;\
+      `;\
+      overlay.appendChild(el);\
+      return \{ el, phase: (i / n) * Math.PI * 2 \};\
+    \});\
+\
+    function frame() \{\
+      const t = (Date.now() - start) / dur;\
+      if (t > 1) \{\
+        dots.forEach(d => d.el.remove());\
+        return;\
+      \}\
+      const angle = t * Math.PI * 4;\
+      const r     = 80 + t * 60;\
+      dots.forEach(d => \{\
+        const a = angle + d.phase;\
+        d.el.style.left    = (cx + Math.cos(a) * r - 7) + 'px';\
+        d.el.style.top     = (cy + Math.sin(a) * r - 7) + 'px';\
+        d.el.style.opacity = 1 - t * 0.8;\
+      \});\
+      requestAnimationFrame(frame);\
+    \}\
+    requestAnimationFrame(frame);\
+  \}\
+\
+  </script>\
+</body>\
+</html>}
